@@ -1,0 +1,57 @@
+id: things_eeg
+display_name: THINGS-EEG
+
+# --- Model I/O dimensions (encoder brain branch) ---
+c_num: 63
+timesteps: [0, 250]          # sample indices, not ms → 250 pts @ 250 Hz = 1 s post-stim
+seq_len: 250                 # timesteps[1] - timesteps[0]
+brain_input_dim: 15750       # c_num * seq_len
+
+# --- Trial semantics ---
+trial_format: repeated       # same image repeated → averaging valid
+train_avg: true
+test_avg: true
+per_trials_train: 4
+per_trials_test: 80
+
+# --- Classes / subjects ---
+n_train_classes: 1654
+n_test_classes: 200
+subjects:
+  - sub-01
+  - sub-02
+  - sub-03
+  - sub-04
+  - sub-05
+  - sub-06
+  - sub-07
+  - sub-08
+  - sub-09
+  - sub-10
+
+# --- Channels ---
+channels_ref: encoder.data.THINGS_CHANNELS
+
+# --- Paths (placeholders: {repo_root}, {eeg_data_root}) ---
+# THINGS lives in-repo; do not use {eeg_data_root} (that is the external EEG root).
+paths:
+  eeg_data_root: "{repo_root}/data/things-eeg"
+  data_dir: "{repo_root}/data/things-eeg/Preprocessed_data_250Hz_whiten"
+  image_root: "{repo_root}/data/things-eeg/Image_set_Resize"
+  feature_dir: "{repo_root}/data/things-eeg/Image_feature/FoveaBlur"
+  clip_feature_blur: FoveaBlur
+
+# --- Preprocessing ---
+preprocess:
+  script: preprocess/process_eeg_whiten.py
+  docs: null
+
+# --- Training configs & artifact naming ---
+train:
+  encoder_config: configs/eeg/fixed_fovea.yaml
+  encoder_exp_prefix: THINGSEEG2
+  predictor_ckpt_dir: "{repo_root}/checkpoints/predictor/THINGSEEG2/Ours/full"
+  results_dir: "{repo_root}/results/generator_final"
+
+eval:
+  n_test_trials: 80

@@ -1,0 +1,13 @@
+# Dataset index — add a new entry when introducing a benchmark.
+# Profiles declare paths, channels, timesteps, trial semantics, and training configs.
+
+default: things_eeg
+
+datasets:
+  things_eeg:
+    profile: profiles/things_eeg.yaml
+    description: THINGS-EEG (in-repo preprocessed .pt, 63ch, 250 samples)
+
+  alljoined_eeg:
+    profile: profiles/alljoined_eeg.yaml
+    description: Alljoined-1.6M consumer EEG (1654/200 classes, 32ch, 250 samples, THINGS stimuli)

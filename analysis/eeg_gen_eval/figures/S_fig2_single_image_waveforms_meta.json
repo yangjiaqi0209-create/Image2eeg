@@ -1,0 +1,101 @@
+{
+  "subject": "sub-08",
+  "n_examples": 5,
+  "n_top_channels": 3,
+  "selection": "fixed shuffled examples (see DEFAULT_IMAGE_INDICES)",
+  "time_style": "Final Fig1d (_plot_panel_a_subject_average)",
+  "psd_style": "Final Fig2d (_plot_psd_curves), best log-PSD-r channel",
+  "examples": [
+    {
+      "image_index": 136,
+      "relpath": "test_images/00137_piglet/piglet_02s.jpg",
+      "concept": "piglet",
+      "mean_channel_r": 0.4968039707580049,
+      "top_channels": [
+        "POz",
+        "PO4",
+        "Oz"
+      ],
+      "top_channel_r": [
+        0.9416390061378479,
+        0.9361873269081116,
+        0.9284870028495789
+      ],
+      "psd_log_r": 0.9582619759510825,
+      "psd_channel": "PO4"
+    },
+    {
+      "image_index": 78,
+      "relpath": "test_images/00079_freezer/freezer_04s.jpg",
+      "concept": "freezer",
+      "mean_channel_r": 0.47374206970608423,
+      "top_channels": [
+        "POz",
+        "PO4",
+        "Oz"
+      ],
+      "top_channel_r": [
+        0.8892331123352051,
+        0.8789263963699341,
+        0.8693739771842957
+      ],
+      "psd_log_r": 0.9547061274005808,
+      "psd_channel": "Oz"
+    },
+    {
+      "image_index": 17,
+      "relpath": "test_images/00018_bok_choy/bok_choy_03s.jpg",
+      "concept": "bok choy",
+      "mean_channel_r": 0.4818987857461685,
+      "top_channels": [
+        "PO4",
+        "O1",
+        "Oz"
+      ],
+      "top_channel_r": [
+        0.9297887682914734,
+        0.9203025698661804,
+        0.9120281934738159
+      ],
+      "psd_log_r": 0.9636453660917175,
+      "psd_channel": "POz"
+    },
+    {
+      "image_index": 93,
+      "relpath": "test_images/00094_headscarf/headscarf_03s.jpg",
+      "concept": "headscarf",
+      "mean_channel_r": 0.5054834998611893,
+      "top_channels": [
+        "PO4",
+        "Oz",
+        "O1"
+      ],
+      "top_channel_r": [
+        0.9425500631332397,
+        0.9315019249916077,
+        0.892249584197998
+      ],
+      "psd_log_r": 0.9777362950096363,
+      "psd_channel": "PO4"
+    },
+    {
+      "image_index": 11,
+      "relpath": "test_images/00012_beaver/beaver_04s.jpg",
+      "concept": "beaver",
+      "mean_channel_r": 0.5008849739762289,
+      "top_channels": [
+        "O1",
+        "Oz",
+        "PO4"
+      ],
+      "top_channel_r": [
+        0.9344253540039062,
+        0.9213551878929138,
+        0.9201355576515198
+      ],
+      "psd_log_r": 0.958697037299255,
+      "psd_channel": "PO4"
+    }
+  ],
+  "raw_dir": "/home/ubuntu/UBP/analysis/eeg_gen_eval/raw/sub-08"
+}

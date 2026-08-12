@@ -11,7 +11,13 @@ import argparse
 
 def get_args_parser():
     parser = argparse.ArgumentParser('train', add_help=False)
-    parser.add_argument('--subject', type=int)
+    parser.add_argument('--subject', type=int, required=True)
+    parser.add_argument('--raw_data_dir', type=str, default=None,
+        help='Path to Raw_data directory (default: data/things-eeg/Raw_data)')
+    parser.add_argument('--img_dir', type=str, default=None,
+        help='Path to Image_set_Resize directory (default: data/things-eeg/Image_set_Resize)')
+    parser.add_argument('--output_dir', type=str, default=None,
+        help='Path to save preprocessed .pt files (default: data/things-eeg/Preprocessed_data_250Hz_whiten)')
     return parser.parse_args()
 
 args = get_args_parser()
@@ -28,14 +34,51 @@ tmax = 1.0
 whiten = True
 
 project_dir = 'data/things-eeg'
+raw_data_dir = args.raw_data_dir or os.path.join(project_dir, 'Raw_data')
+img_dir = args.img_dir or os.path.join(project_dir, 'Image_set_Resize')
+output_base = args.output_dir or os.path.join(project_dir, f'Preprocessed_data_{re_sfreq}Hz_whiten')
 
 if whiten:
-    save_dir = os.path.join(project_dir,
-        f'Preprocessed_data_{re_sfreq}Hz_whiten', 'sub-'+format(sub,'02'))
+    save_dir = os.path.join(output_base, 'sub-'+format(sub,'02'))
 else:
     save_dir = os.path.join(project_dir,
         f'Preprocessed_data_{re_sfreq}Hz_no_whiten', 'sub-'+format(sub,'02'))
 os.makedirs(save_dir, exist_ok=True)
+
+def resolve_raw_eeg_path(mode, sub, ses):
+    sub_dir = os.path.join(raw_data_dir, 'sub-'+format(sub,'02'), 'ses-'+format(ses,'02'))
+    candidates = [f'raw_eeg_{mode}.npy']
+    if mode == 'train':
+        candidates.append('raw_eeg_training.npy')
+    for name in candidates:
+        path = os.path.join(sub_dir, name)
+        if os.path.isfile(path):
+            return path
+    raise FileNotFoundError(f'No raw EEG file found in {sub_dir} (tried {candidates})')
+
+def resolve_train_img_dir():
+    for name in ('train_images', 'training_images'):
+        path = os.path.join(img_dir, name)
+        if os.path.isdir(path):
+            return path, name
+    raise FileNotFoundError(f'No train image directory found under {img_dir}')
+
+def collect_image_metadata(img_directory, img_dir_root):
+    all_folders = [d for d in os.listdir(img_directory) if os.path.isdir(os.path.join(img_directory, d))]
+    all_folders.sort()
+    images, labels, texts = [], [], []
+    for i, folder in enumerate(all_folders):
+        folder_path = os.path.join(img_directory, folder)
+        all_images = [img for img in os.listdir(folder_path) if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
+        all_images.sort()
+        for img in all_images:
+            rel_path = os.path.relpath(os.path.join(folder_path, img), img_dir_root)
+            if rel_path.startswith('training_images' + os.sep):
+                rel_path = 'train_images' + rel_path[len('training_images'):]
+            images.append(rel_path)
+            labels.append(i)
+            texts.append(img.rsplit('_', 1)[0])
+    return images, labels, texts
 
 chan_order = ['Fp1', 'Fp2', 'AF7', 'AF3', 'AFz', 'AF4', 'AF8', 'F7', 'F5', 'F3',
 				  'F1', 'F2', 'F4', 'F6', 'F8', 'FT9', 'FT7', 'FC5', 'FC3', 'FC1', 
@@ -104,10 +147,8 @@ def epoch_data(mode,sub):
     img_conditions = []
     for s in range(n_ses):
         ### Load the EEG data and convert it to MNE raw format ###
-        eeg_dir = os.path.join('Raw_data', 'sub-'+
-            format(sub,'02'), 'ses-'+format(s+1,'02'), f"raw_eeg_{mode}.npy")
-        eeg_data = np.load(os.path.join(project_dir, eeg_dir),
-            allow_pickle=True).item()
+        eeg_path = resolve_raw_eeg_path(mode, sub, s+1)
+        eeg_data = np.load(eeg_path, allow_pickle=True).item()
         ch_names = eeg_data['ch_names']
         sfreq = eeg_data['sfreq']
         ch_types = eeg_data['ch_types']
@@ -187,19 +228,8 @@ del whitened_test
 
 # 'img': duplicated_images,
 # 'label': label,
-img_directory = f'data/things-eeg/Image_set_Resize/test_images'
-all_folders = [d for d in os.listdir(img_directory) if os.path.isdir(os.path.join(img_directory, d))]
-all_folders.sort()
-images = []
-labels = []
-texts = []
-for i,folder in enumerate(all_folders):
-    folder_path = os.path.join(img_directory, folder)
-    all_images = [img for img in os.listdir(folder_path) if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
-    all_images.sort()
-    images.extend(os.path.join(folder_path, img).rsplit("Image_set_Resize/")[-1] for img in all_images)
-    labels.extend([i for img in all_images])
-    texts.extend([img.rsplit('_',1)[0] for img in all_images])
+img_directory = os.path.join(img_dir, 'test_images')
+images, labels, texts = collect_image_metadata(img_directory, img_dir)
 img_list = np.tile(np.array(images)[:, np.newaxis], (1, 80))
 labels_list = np.tile(np.array(labels)[:, np.newaxis], (1, 80))
 text_list = np.tile(np.array(texts)[:, np.newaxis], (1, 80))
@@ -258,25 +288,8 @@ for i in range(len(np.unique(img_cond))):
     
 del ordered_data
 
-img_directory = f'data/things-eeg/Image_set_Resize/train_images'
-all_folders = [d for d in os.listdir(img_directory) if os.path.isdir(os.path.join(img_directory, d))]
-all_folders.sort()
-images = []  
-labels = []
-texts = []
-for i,folder in enumerate(# `all_folders` is a list that is being used to store the names of all the
-# folders present in the specified directory `img_directory`. In this code
-# snippet, `all_folders` is being populated with the names of the folders
-# found within the `img_directory` path. These folders are then sorted in
-# alphabetical order.
-all_folders):
-    folder_path = os.path.join(img_directory, folder)
-    all_images = [img for img in os.listdir(folder_path) if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
-    all_images.sort()
-    images.extend(os.path.join(folder_path, img).rsplit("Image_set_Resize/")[-1] for img in all_images)
-    labels.extend([i for img in all_images])
-    texts.extend([img.rsplit('_',1)[0] for img in all_images])
-    
+train_img_directory, _ = resolve_train_img_dir()
+images, labels, texts = collect_image_metadata(train_img_directory, img_dir)
 
 labels_list = np.tile(np.array(labels)[:, np.newaxis], (1, 4))
 img_list = np.tile(np.array(images)[:, np.newaxis], (1, 4))

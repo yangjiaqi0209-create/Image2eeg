@@ -1,18 +1,73 @@
-**/exp/
-**/data/
-**.pth
+# --- Large local artifacts (do not commit) ---
+checkpoints/
+results/
+pretrained/
+# Large THINGS payloads only — keep data/registry.yaml + profiles tracked
+data/things-eeg/
 
-**.ckpt
+# Weights / binary caches
+*.pth
+*.ckpt
+*.pt
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.h5
+*.hdf5
 
-.vscode/
-.vscode/**
+# Analysis regenerable intermediates
+analysis/**/raw/
+analysis/**/raw_*/
+analysis/**/rsa_paper_demo/
+analysis/**/rsa_demo_test/
+analysis/**/figures_mean_eeg/
+analysis/**/figures_*scratch*/
+analysis/**/figures_shared_head/
+analysis/**/figures_exp_*/
+analysis/**/figures_no_bandcorr/
+analysis/**/figures_n4/
+analysis/**/figures_nod/
 
-.ipynb_checkpoints/
-**/.ipynb_checkpoints/
+# Keep final paper figures tracked:
+#   analysis/eeg_gen_eval/figures/
+#   analysis/eeg_gen_eval/figures_alljoined/
 
+# --- Python ---
 __pycache__/
 **/__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-**/lightning_logs/**
+# --- Notebooks / IDE ---
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+.vscode/
+.idea/
 
-data
+# --- LaTeX build ---
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bbl
+*.blg
+manuscript/texmf/
+manuscript/*.pdf
+
+# --- Misc ---
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+**/lightning_logs/
+numba_cache/
+**/numba_cache/
+/tmp/

@@ -1,0 +1,67 @@
+%% Minimal local stub for ctexhook.sty
+%% Enables xeCJK when full texlive-lang-chinese is not installed.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ctexhook}[2026/07/31 v0.1 local stub for xeCJK]
+\RequirePackage{expl3}
+\ExplSyntaxOn
+
+\cs_new_protected:Npn \ctex_disable_package:n #1
+  {
+    \cs_set_eq:cN { ver@ #1 .sty } \scan_stop:
+    \cs_set_protected:cpn {#1}
+      {
+        \PackageWarning { ctexhook }
+          { Package~`#1'~disabled~by~local~ctexhook~stub }
+      }
+  }
+
+\cs_new_protected:Npn \ctex_replace_package:nn #1 #2
+  {
+    \cs_set_eq:cN { ver@ #1 .sty } \scan_stop:
+    \cs_set_protected:cpn {#1.sty}
+      { \RequirePackage {#2} }
+  }
+
+\prg_new_conditional:Npnn \ctex_if_format_at_least:n #1 { T , F , TF }
+  {
+    \@ifl@t@r \fmtversion {#1}
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+
+\tl_new:N \g__ctex_at_end_preamble_hook_tl
+\tl_new:N \g__ctex_after_end_preamble_hook_tl
+
+\cs_new_protected:Npn \ctex_at_end_preamble:n #1
+  { \tl_gput_right:Nn \g__ctex_at_end_preamble_hook_tl {#1} }
+
+\cs_new_protected:Npn \ctex_after_end_preamble:n #1
+  { \tl_gput_right:Nn \g__ctex_after_end_preamble_hook_tl {#1} }
+
+\cs_new_protected:Npn \ctex_at_end_package:nn #1 #2
+  {
+    \tl_if_exist:cF { g__ctex_at_end_package_ #1 _tl }
+      { \tl_new:c { g__ctex_at_end_package_ #1 _tl } }
+    \tl_gput_right:cn { g__ctex_at_end_package_ #1 _tl } {#2}
+  }
+
+\cs_new_protected:Npn \ctex_at_begin_package:nn #1 #2
+  {
+    \tl_if_exist:cF { g__ctex_at_begin_package_ #1 _tl }
+      { \tl_new:c { g__ctex_at_begin_package_ #1 _tl } }
+    \tl_gput_right:cn { g__ctex_at_begin_package_ #1 _tl } {#2}
+  }
+
+\AtEndOfPackage
+  {
+    \ctex_at_end_preamble:n
+      { \tl_use:N \g__ctex_at_end_preamble_hook_tl }
+  }
+
+\AtBeginDocument
+  {
+    \tl_use:N \g__ctex_after_end_preamble_hook_tl
+  }
+
+\ExplSyntaxOff
+\endinput

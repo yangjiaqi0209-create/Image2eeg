@@ -1,0 +1,70 @@
+id: alljoined_eeg
+display_name: Alljoined-1.6M
+
+# --- Model I/O dimensions (encoder brain branch) ---
+c_num: 32
+timesteps: [0, 250]
+seq_len: 250
+brain_input_dim: 8000
+
+# --- Trial semantics (same RSVP / repeated-image design as THINGS-EEG2) ---
+trial_format: repeated
+train_avg: true
+test_avg: true
+per_trials_train: 4
+per_trials_test: 80
+
+# --- Classes / subjects ---
+n_train_classes: 1654
+n_test_classes: 200
+subjects:
+  - sub-01
+  - sub-02
+  - sub-03
+  - sub-04
+  - sub-05
+  - sub-06
+  - sub-07
+  - sub-08
+  - sub-09
+  - sub-10
+  - sub-11
+  - sub-12
+  - sub-13
+  - sub-14
+  - sub-15
+  - sub-16
+  - sub-17
+  - sub-18
+  - sub-19
+  - sub-20
+
+# --- Channels ---
+channels_ref: encoder.data.ALLJOINED_CHANNELS
+
+# --- Paths (placeholders: {repo_root}, {eeg_data_root}) ---
+paths:
+  eeg_data_root: "{eeg_data_root}/alljoined-1.6M"
+  data_dir: "{eeg_data_root}/alljoined-1.6M/ubp_preprocessed"
+  image_root: "{repo_root}/data/things-eeg/Image_set_Resize"
+  feature_dir: "{eeg_data_root}/alljoined-1.6M/clip_features/FoveaBlur"
+  hf_raw_dir: "{eeg_data_root}/alljoined-1.6M/raw_hf/preprocessed_eeg"
+  clip_feature_blur: FoveaBlur
+
+# --- Preprocessing ---
+preprocess:
+  script: preprocess/convert_alljoined.py
+  batch_script: scripts/preprocess_alljoined_all.sh
+  docs: README.md  # Alljoined section
+
+# --- Training configs & artifact naming (Phase 2) ---
+train:
+  encoder_config: configs/eeg/alljoined_ubp.yaml
+  encoder_exp: Alljoined
+  encoder_exp_prefix: Alljoined
+  clip_mode: fixed_fovea
+  predictor_ckpt_dir: "{repo_root}/checkpoints/predictor/Alljoined/Ours/full"
+  results_dir: "{repo_root}/results/alljoined_eeg"
+
+eval:
+  n_test_trials: 80

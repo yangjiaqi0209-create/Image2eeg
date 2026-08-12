@@ -1,127 +1,101 @@
 # Uncertainty-aware Blur Prior (UBP)
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Repo Architecture](#repo-architecture)
-- [Environment Setup](#environment-setup)
-- [Data Preparation](#data-preparation)
-- [Run](#run)
-- [Acknowledgement](#acknowledgement)
+Official code for [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](https://arxiv.org/abs/2503.04207) (CVPR 2025), plus the manuscript Results pipeline (THINGS-EEG / Alljoined).
 
-## Introduction
-This is the official implementation for [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](https://arxiv.org/abs/2503.04207) (CVPR 2025) with various brain and CLIP encoders. **SOTA** result in the EEG-Vision Retrieval Task.
+## Directory roles (read this first)
 
-<p align="center">
-<img src="./assets/motivation.png" >
-</p>
+One job per place — avoid treating similar-looking folders as duplicates:
 
+| Path | Role |
+|------|------|
+| `data/` | **数据**：`things-eeg/` 文件 + `registry.yaml` / `profiles/` 注册表 |
+| `preprocess/` + `scripts/*preprocess*` | 把原始数据转成训练用格式 |
+| `encoder/` + `configs/eeg/` | EEG **编码器**：`python -m encoder.train`（或 `scripts/train_things_encoder.sh` / `train_alljoined.sh`） |
+| `predictor/` | EEG **预测器**（图像→EEG）：`python -m predictor.train`（或 `scripts/train_*two_stage*.sh`） |
+| `checkpoints/encoder/` | **编码器权重**（`THINGSEEG2/` / `Alljoined/`） |
+| `checkpoints/predictor/` | **预测器（生成器）权重**（`Ours` + 消融） |
+| `pretrained/` | CLIP 等第三方预训练权重 |
+| `analysis/eeg_gen_eval/` | 论文评估：`plots/` / `helpers/` / `compute/` + 缓存 `raw*` + 成图 `figures/` |
+| `manuscript/` | 手稿 TeX（引用 `analysis/.../figures`） |
+| `scripts/` | 一键入口（优先用这里，不要散落找命令） |
 
-## Repo Architecture
-```
-UBP/                           # Root directory
-├── README.md
-├── base                       # Core implementation files
-│   ├── data.py                # Data loading
-│   ├── eeg_backbone.py        # EEG encoder backbone implementation
-│   ├── inpating_data.py       # Inpainting data module for preprocessing
-│   └── utils.py               # Utility functions
-├── configs
-│   ├── baseline.yaml          # Configuration for baseline experiments
-│   └── ubp.yaml               # Configuration for UBP experiments
-├── data                       # Directory for datasets
-│   └── things-eeg
-│       ├── Image_feature      # Pre-extracted image features
-│       ├── Image_set          # Original image dataset
-│       ├── Image_set_Resize   # Resized image dataset
-│       ├── Preprocessed_data_250Hz_whiten # Preprocessed EEG data (whitened)
-│       └── Raw_data
-├── exp                        # Directory for experiment results
-├── main.py                    # Main script for running experiments
-├── preprocess
-│   ├── process_eeg_whiten.py  # Script to preprocess and whiten EEG data
-│   └── process_resize.py      # Script to resize image dataset
-├── requirements.txt           # List of required Python packages
-└── scripts
-    ├── bash_preprocess.sh     # Bash script for preprocessing data
-    └── exp.sh                 # Bash script for running experiments
-```
-## Environment Setup
-- Python 3.8.19
-- Cuda 12.0
-- PyTorch 2.4.1
-- Required libraries are listed in `requirements.txt`.
+## Environment
 
-```
+```bash
 pip install -r requirements.txt
+# scripts 默认 conda 环境名: UBP
 ```
 
-## Data Preparation
-1. Download the Things-image from the [OSF repository](https://osf.io/jum2f/files/osfstorage), Things-EEG from the [OSF repository](https://osf.io/anp5v/files/osfstorage), Things-MEG from [Openneuro repository](https://openneuro.org/datasets/ds004212/versions/2.0.1), and put them in the `data` dir. 
-We have made all processed data and experimental checkpoints publicly available on Hugging Face:
+## Data
 
-- **THINGS-EEG Dataset:** [Haitao999/things-eeg](https://huggingface.co/datasets/Haitao999/things-eeg)
-- **THINGS-MEG Dataset:** [Haitao999/things-meg](https://huggingface.co/datasets/Haitao999/things-meg)
-- **UBP Checkpoints:** [Haitao999/ubp_exp](https://huggingface.co/Haitao999/ubp_exp) (Optional)
+统一入口：`data/`（文件 + `registry.yaml` / `profiles/`）。环境变量见 `data/env.example`。
 
-（If the processed data is downloaded, the following processing step can be skipped.）
-
-
-2. Process the data to .pt format using the preprocessing script for all subjects:
-```
-/bin/bash scripts/bash_preprocess.sh
+```bash
+python -m encoder.registry list
+python -m encoder.registry show things_eeg
 ```
 
+**THINGS-EEG**（仓库内 `data/things-eeg/`，或 HF：[Haitao999/things-eeg](https://huggingface.co/datasets/Haitao999/things-eeg)）
 
-Finally, we have the directory tree:
-```
-├── data
-    ├── things-eeg
-        ├── Image_set
-        ├── Image_set_Resize
-        ├── Raw_data (optional)
-        ├── Preprocessed_data_250Hz_whiten
-    ├── things
-        ├── THINGS
-            ├── Images
-            ├── Metadata
-    ├── things-meg
-        ├── Image_set
-        ├── Image_set_Resize
-        ├── ds004212-download (Raw_data, optional)
-        ├── Preprocessed_data
-```
-## Run
-To run the experiments using the provided configurations, execute:
-```
-/bin/bash scripts/exp.sh
+若只有原始数据，再跑预处理（已下载 `Preprocessed_data_250Hz_whiten/` 可跳过）：
+
+```bash
+python preprocess/process_resize.py --type eeg
+for s in $(seq 1 10); do
+  python preprocess/process_eeg_whiten.py --subject "$s"
+done
 ```
 
+**Alljoined-1.6M**（HF：[Alljoined/Alljoined-1.6M](https://huggingface.co/datasets/Alljoined/Alljoined-1.6M) → UBP `.pt`）
+
+| Item | Value |
+|------|-------|
+| Registry id | `alljoined_eeg` |
+| Shape | train `(16540, 4, 32, 250)` / test `(200, 80, 32, 250)` @ 250 Hz |
+| Images | 复用 `data/things-eeg/Image_set_Resize` |
+| Channels | `encoder.data.ALLJOINED_CHANNELS`（32） |
+
+```text
+$UBP_EEG_DATA_ROOT/alljoined-1.6M/          # 默认 /home/ubuntu/dataset/EEG
+├── raw_hf/preprocessed_eeg/               # 下载缓存（可删，仅预处理需要）
+└── ubp_preprocessed/sub-XX/{train,test}.pt
 ```
-brain_backbone="EEGProjectLayer"
-vision_backbone="RN50"
-i="01"
-seed=0
-python main.py --config configs/ubp.yaml --subjects sub-$i --seed $seed --exp_setting intra-subject --brain_backbone $brain_backbone --vision_backbone $vision_backbone --epoch 50 --lr 1e-4;
 
+```bash
+export UBP_EEG_DATA_ROOT=/home/ubuntu/dataset/EEG   # 见 data/env.example
+# optional: export HF_ENDPOINT=https://hf-mirror.com
+bash scripts/download_alljoined.sh
+bash scripts/preprocess_alljoined_all.sh
+python -m encoder.registry show alljoined_eeg
 ```
-## Acknowledgement
-We acknowledge the contributions of the following datasets:
-- [A large and rich EEG dataset for modeling human visual object recognition](https://www.sciencedirect.com/science/article/pii/S1053811922008758) [THINGS-EEG]
-- [
-THINGS-data, a multimodal collection of large-scale datasets for investigating object representations in human brain and behavior](https://pubmed.ncbi.nlm.nih.gov/36847339/) [THINGS-MEG]
 
-The code is inspired by prior awesome works on neural decoding tasks:
-- [Decoding Natural Images from EEG for Object Recognition](https://github.com/eeyhsong/NICE-EEG) [ICLR 2024]
-- [Visual Decoding and Reconstruction via EEG Embeddings with Guided Diffusion](https://github.com/dongyangli-del/EEG_Image_decode) [NeurIPS 2024]
-- [Decoding Visual Neural Representations by Multimodal Learning of Brain-Visual-Linguistic Features](https://github.com/ChangdeDu/BraVL)  [TPAMI 2023]
+Notes: 官方 MVNN 白化不必与 THINGS `process_eeg_whiten.py` 数值一致；测试集每图取前 80 trial。
 
-Uncertainy-aware work related to multimodality:
-- [Trusted multi-view classification with dynamic evidential fusion](https://github.com/hanmenghan/TMC) [TPAMI 2022]
-- [Provable Dynamic Fusion for Low-Quality Multimodal Data](https://github.com/QingyangZhang/QMF) (ICML 2023)
-- [Reliable Conflictive Multi-View Learning](https://github.com/jiajunsi/RCML) (AAAI 2024, Outstanding Paper)
+## Reproduce manuscript Results
+
+```bash
+# THINGS: encoder → generator
+bash scripts/train_things_encoder.sh
+bash scripts/train_final_two_stage.sh
+
+# Fig.4 ablations（训练；也可 run_*_ablation.sh = 训练 + 聚合 + 重画 final_fig4）
+bash scripts/train_structural_ablation.sh   # no_Dilated, no_Transformer
+bash scripts/train_extended_ablation.sh     # no_FoveaBlur, no_self_attn, h128, h512
+bash scripts/train_loss_group_ablation.sh
+
+# Alljoined: encoder (20) → generator (strong-5)
+bash scripts/train_alljoined.sh
+bash scripts/train_alljoined_final_two_stage.sh
+
+# Redraw paper figures (uses analysis/eeg_gen_eval/raw*)
+PYTHONPATH=. python -m analysis.eeg_gen_eval.plots.redraw_all
+
+# Compile manuscript excerpt
+cd manuscript && xelatex results_sec3.tex
+```
 
 ## Citation
-If you find our work helpful, please cite:
+
 ```bibtex
 @inproceedings{wu2025bridging,
   title={Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior},
@@ -130,9 +104,15 @@ If you find our work helpful, please cite:
   pages={2246--2257},
   year={2025}
 }
+
+@misc{xu2025alljoined16mmilliontrialeegimagedataset,
+  title={Alljoined-1.6M: A Million-Trial EEG-Image Dataset for Evaluating Affordable Brain-Computer Interfaces},
+  author={Jonathan Xu and others},
+  year={2025},
+  eprint={2508.18571},
+}
 ```
 
+## Contact
 
-## Contact us
-For any additional questions, feel free to email wuhaitao@tju.edu.cn .
-
+yangjiaqi_bme2026@163.com
