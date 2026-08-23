@@ -20,11 +20,8 @@
 #   RESUME=1 bash scripts/train_final_two_stage.sh
 
 set -euo pipefail
-cd "$(dirname "$0")/.."
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate UBP
-export PYTHONNOUSERSITE=1
-export PYTHONDONTWRITEBYTECODE=1
+# shellcheck disable=SC1091
+source "$(dirname "$0")/_env.sh"
 
 SUBS="${1:-1-10}"
 GPU="${GPU:-0}"
@@ -106,7 +103,7 @@ run_stage1() {
   python -m predictor.train \
     --sub "$sub" --gpu "$GPU" --seed 2023 \
     --n_layers "$N_LAYERS" --generator_arch full \
-    --clip_input "$CLIP_INPUT" --blur_delta 0 \
+    --clip_input "$CLIP_INPUT" \
     --ubp_ckpt "$UBP_CKPT" \
     --semantic_mode ubp_margin --lambda_sem 0 \
     --lambda_ubp 0.5 --lambda_eeg_nce 0.1 --lambda_margin 0 --lambda_div 0 \
@@ -144,11 +141,11 @@ run_stage2() {
     --epochs 25 --early_stop_patience 8 --early_stop_metric semantic_guard \
     --lr 1.5e-5 \
     --n_layers "$N_LAYERS" --generator_arch full \
-    --clip_input "$CLIP_INPUT" --blur_delta 0 \
+    --clip_input "$CLIP_INPUT" \
     --ubp_ckpt "$UBP_CKPT" \
     --semantic_mode ubp_margin --lambda_sem 0 \
     --lambda_time 1.0 --lambda_corr 0.8 \
-    --lambda_freq 0 --lambda_band 0 --lambda_hf 0 \
+    --lambda_freq 0 --lambda_band 0 \
     --lambda_band_corr 0.32 \
     --band_weights "delta=2.0,beta=1.5,gamma=1.0" \
     --gamma_fmax 45 \

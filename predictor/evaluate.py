@@ -18,7 +18,7 @@ from predictor.data import eeg_to_ubp_embedding, load_frozen_ubp_brain
 def compute_gt_gen_encoder_metrics(
     y_hat: torch.Tensor,
     y: torch.Tensor,
-    brain: nn.Module,
+    brain: torch.nn.Module,
     *,
     compute_random: bool = True,
 ) -> Dict[str, float]:

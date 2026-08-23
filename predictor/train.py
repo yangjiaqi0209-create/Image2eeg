@@ -1,5 +1,5 @@
 """
-Per-subject Image-to-EEG generator (63ch, single-stage, multi-blur train).
+Per-subject Image-to-EEG predictor (CLIP → EEG).
 
   python -m predictor.train --sub 1 --gpu 0
   python -m predictor.train --num_sub 10 --gpu 0
@@ -26,34 +26,33 @@ if _REPO_ROOT not in sys.path:
 from encoder.models import clip_z_dim
 from predictor.data import (
     CLIP_INPUT_CHOICES,
-    _uses_multi_blur_train,
+    default_ubp_ckpt_path,
+    load_frozen_ubp_brain,
     load_subject_splits,
     make_loaders,
+    resolve_encoder_ckpt_path,
 )
 from predictor.evaluate import evaluate_subject
 from predictor.losses import (
+    GAMMA_FMAX,
     GeneratorLoss,
     LAMBDA_BAND,
+    LAMBDA_BAND_CORR,
     LAMBDA_CORR,
     LAMBDA_DIV,
-    LAMBDA_FREQ,
     LAMBDA_EEG_NCE,
-    LAMBDA_HF,
-    LAMBDA_BAND_CORR,
+    LAMBDA_ENC,
+    LAMBDA_FREQ,
     LAMBDA_MARGIN,
     LAMBDA_SEM,
     LAMBDA_TIME,
     LAMBDA_UBP,
-    GAMMA_FMAX,
     SEMANTIC_MODES,
     SEMANTIC_TEMPERATURE,
+    build_channel_weights,
+    build_time_weights,
 )
-from predictor.model import GENERATOR_ARCH_CHOICES, build_generator
-from predictor.data import (
-    default_ubp_ckpt_path,
-    load_frozen_ubp_brain,
-    resolve_encoder_ckpt_path,
-)
+from predictor.model import GENERATOR_ARCH_CHOICES, build_generator, init_spatial_maps_pca
 
 
 def set_seed(seed: int):
@@ -95,7 +94,7 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
     model.train()
     sums = {
         'loss': 0.0, 'time': 0.0, 'freq': 0.0, 'band': 0.0,
-        'corr': 0.0, 'diversity': 0.0, 'semantic': 0.0,
+        'corr': 0.0, 'enc': 0.0, 'diversity': 0.0, 'semantic': 0.0,
         'ubp': 0.0, 'eeg_nce': 0.0, 'margin': 0.0,
     }
     n = 0
@@ -119,7 +118,7 @@ def eval_epoch(model, loader, criterion, device):
     model.eval()
     sums = {
         'loss': 0.0, 'time': 0.0, 'freq': 0.0, 'band': 0.0,
-        'corr': 0.0, 'diversity': 0.0, 'semantic': 0.0,
+        'corr': 0.0, 'enc': 0.0, 'diversity': 0.0, 'semantic': 0.0,
         'ubp': 0.0, 'eeg_nce': 0.0, 'margin': 0.0,
     }
     n = 0
@@ -185,15 +184,14 @@ def _early_stop_score(val_m: dict, metric: str) -> float:
     """Scalar for early stopping / LR schedule (lower is better)."""
     if metric == 'loss':
         return val_m['loss']
-    if metric == 'mse':
-        return val_m['time']
-    if metric == 'waveform':
-        return val_m['time'] + 0.5 * val_m['corr']
     if metric == 'semantic_guard':
         return val_m['time'] + val_m.get('ubp', 0.0) + val_m.get('eeg_nce', 0.0)
+    if metric == 'corr':
+        return val_m['corr']
+    if metric == 'enc':
+        return val_m.get('enc', val_m['corr'])
     raise ValueError(
-        f'Unknown early_stop_metric {metric!r}; '
-        f'choose from loss, mse, waveform, semantic_guard'
+        f'Unknown early_stop_metric {metric!r}; choose from loss, semantic_guard, corr, enc'
     )
 
 
@@ -209,13 +207,13 @@ def _log_line(epoch, dt, train_m, val_m):
         f'epoch {epoch:03d} ({dt:.1f}s) '
         f'train loss={train_m["loss"]:.4f} mse={train_m["time"]:.4f} '
         f'freq={train_m["freq"]:.4f} band={train_m["band"]:.4f} '
-        f'corr={train_m["corr"]:.4f} '
+        f'corr={train_m["corr"]:.4f} enc={train_m.get("enc", 0.0):.4f} '
         f'div={train_m["diversity"]:.4f} '
         f'{sem_part}'
         f'| '
         f'val loss={val_m["loss"]:.4f} mse={val_m["time"]:.4f} '
         f'freq={val_m["freq"]:.4f} band={val_m["band"]:.4f} '
-        f'corr={val_m["corr"]:.4f} '
+        f'corr={val_m["corr"]:.4f} enc={val_m.get("enc", 0.0):.4f} '
         f'div={val_m["diversity"]:.4f}\n'
     )
 
@@ -228,17 +226,12 @@ def train_subject(args, sub: int, device: torch.device):
     os.makedirs(result_dir, exist_ok=True)
     log_path = os.path.join(result_dir, 'log.txt')
 
-    (
-        clip_tr_med, clip_tr_high, eeg_tr,
-        clip_va, eeg_va,
-        clip_test, eeg_test,
-    ) = load_subject_splits(
+    clip_tr, eeg_tr, clip_va, eeg_va, clip_test, eeg_test = load_subject_splits(
         sub=sub,
         data_dir=args.data_dir,
         model_type=args.vision_backbone,
         clip_input=args.clip_input,
         blur_kernel_size=args.blur_kernel_size,
-        blur_delta=args.blur_delta,
         seed=args.seed,
         n_val=args.n_val,
         device=device,
@@ -247,15 +240,25 @@ def train_subject(args, sub: int, device: torch.device):
         avg=not args.no_eeg_avg,
     )
 
-    multi_blur = _uses_multi_blur_train(args.clip_input, args.blur_delta)
-
     seq_len = eeg_tr.shape[-1]
     n_ch = eeg_tr.shape[1]
+    train_pt = os.path.join(args.data_dir, f'sub-{sub:02d}', 'train.pt')
+    ch_names = []
+    if os.path.isfile(train_pt):
+        meta = torch.load(train_pt, map_location='cpu', weights_only=False)
+        ch_names = list(meta.get('ch_names') or [])
+        del meta
+    channel_weight = build_channel_weights(ch_names, args.channel_region_weights)
+    time_weight = build_time_weights(seq_len, args.sfreq, args.time_window_weights)
+    if channel_weight is not None or time_weight is not None:
+        print(
+            f'{sub_tag} loss weights: regions={args.channel_region_weights or "uniform"} '
+            f'time={args.time_window_weights or "uniform"} enc={args.lambda_enc}'
+        )
     brain_cfg = _brain_config(n_ch, args.z_dim, [0, seq_len])
 
     train_loader, val_loader = make_loaders(
-        clip_tr_med, clip_tr_high, eeg_tr, clip_va, eeg_va,
-        multi_blur_train=multi_blur,
+        clip_tr, eeg_tr, clip_va, eeg_va,
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         seed=args.seed,
@@ -283,7 +286,11 @@ def train_subject(args, sub: int, device: torch.device):
         per_channel_heads=not args.no_per_channel_heads,
         tcn_dilations=args.tcn_dilations or None,
         tcn_residual=not args.tcn_no_residual,
+        n_spatial=args.n_spatial,
     ).to(device)
+    if args.n_spatial > 0:
+        init_spatial_maps_pca(model, eeg_tr)
+        print(f'{sub_tag} spatial rank-{args.n_spatial} decoder, PCA-init from train EEG')
 
     criterion = GeneratorLoss(
         brain=brain,
@@ -296,16 +303,15 @@ def train_subject(args, sub: int, device: torch.device):
         lambda_ubp=args.lambda_ubp,
         lambda_margin=args.lambda_margin,
         lambda_eeg_nce=args.lambda_eeg_nce,
-        lambda_hf=args.lambda_hf,
         lambda_band_corr=args.lambda_band_corr,
+        lambda_enc=args.lambda_enc,
         semantic_mode=args.semantic_mode,
         semantic_temperature=args.semantic_temperature,
         gamma_fmax=args.gamma_fmax,
+        sfreq=args.sfreq,
         band_weights=_parse_band_weights(args.band_weights) or None,
-        hf_fmin=args.hf_fmin,
-        hf_fmax=args.hf_fmax,
-        low_freq_emphasis=args.low_freq_emphasis,
-        waveform_only=False,
+        channel_weight=channel_weight,
+        time_weight=time_weight,
     )
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
@@ -332,8 +338,8 @@ def train_subject(args, sub: int, device: torch.device):
             log_f.write(f'\n--- resumed {time.strftime("%Y-%m-%d %H:%M:%S")} ---\n')
         else:
             log_f.write(
-                f'{sub_tag} generator training ({n_ch}ch, clip_input={args.clip_input}, '
-                f'multi_blur={multi_blur}, arch={args.generator_arch})\n'
+                f'{sub_tag} predictor training ({n_ch}ch, clip_input={args.clip_input}, '
+                f'arch={args.generator_arch})\n'
             )
             log_f.write(f'args: {vars(args)}\n\n')
 
@@ -409,7 +415,7 @@ def train_subject(args, sub: int, device: torch.device):
 
 
 def parse_args():
-    p = argparse.ArgumentParser(description='Train 63ch Image-to-EEG generator (UBP blur prior)')
+    p = argparse.ArgumentParser(description='Train Image-to-EEG predictor (CLIP → EEG)')
     p.add_argument('--sub', type=int, default=None)
     p.add_argument('--num_sub', type=int, default=10)
     p.add_argument('--sub_start', type=int, default=1)
@@ -423,8 +429,8 @@ def parse_args():
     p.add_argument('--early_stop_patience', type=int, default=15)
     p.add_argument(
         '--early_stop_metric', type=str, default='loss',
-        choices=('loss', 'mse', 'waveform', 'semantic_guard'),
-        help='Validation scalar for early stopping / LR schedule (mse ignores extra freq terms).',
+        choices=('loss', 'semantic_guard', 'corr', 'enc'),
+        help='Validation scalar for early stopping / LR schedule (lower is better).',
     )
     p.add_argument('--resume', action='store_true')
     p.add_argument(
@@ -436,12 +442,10 @@ def parse_args():
     p.add_argument('--vision_backbone', type=str, default='RN50')
     p.add_argument('--z_dim', type=int, default=1024)
     p.add_argument('--blur_kernel_size', type=int, default=51,
-                   help='Primary blur kernel (inference uses this level)')
-    p.add_argument('--blur_delta', type=int, default=6,
-                   help='High blur = blur_kernel_size + blur_delta (ubp train aug only)')
+                   help='Fovea blur kernel size (ignored for sharp)')
     p.add_argument(
-        '--clip_input', type=str, default='ubp', choices=CLIP_INPUT_CHOICES,
-        help='CLIP visual prior: sharp | uniform | fovea | ubp (medium+high aug)',
+        '--clip_input', type=str, default='fovea', choices=CLIP_INPUT_CHOICES,
+        help='CLIP visual prior: sharp | fovea',
     )
     p.add_argument('--hidden', type=int, default=256)
     p.add_argument('--n_layers', type=int, default=4)
@@ -461,6 +465,10 @@ def parse_args():
         '--tcn_no_residual', action='store_true',
         help='Disable residual skip connections inside dilated TCN blocks.',
     )
+    p.add_argument(
+        '--n_spatial', type=int, default=0,
+        help='If >0, decode via rank-K spatial maps (K, C) instead of per-channel heads.',
+    )
     p.add_argument('--lambda_time', type=float, default=LAMBDA_TIME)
     p.add_argument('--lambda_freq', type=float, default=LAMBDA_FREQ)
     p.add_argument('--lambda_band', type=float, default=LAMBDA_BAND)
@@ -473,18 +481,26 @@ def parse_args():
                    help='EEG–EEG InfoNCE weight: brain(y_hat_i) vs brain(y_*) in-batch.')
     p.add_argument('--lambda_margin', type=float, default=LAMBDA_MARGIN,
                    help='CLIP InfoNCE weight (semantic_mode=ubp_margin).')
-    p.add_argument('--lambda_hf', type=float, default=LAMBDA_HF,
-                   help='High-frequency excess penalty (38–45 Hz artifacts).')
     p.add_argument('--lambda_band_corr', type=float, default=LAMBDA_BAND_CORR,
                    help='Band-limited waveform correlation loss (delta/beta emphasis via --band_weights).')
+    p.add_argument('--lambda_enc', type=float, default=LAMBDA_ENC,
+                   help='Across-image Pearson at each channel×time (encoding / %%NC analogue).')
+    p.add_argument(
+        '--channel_region_weights', type=str, default='',
+        help='Region weights for MSE/corr/enc, e.g. occipital=2,temporal=1.5,frontal=0.5',
+    )
+    p.add_argument(
+        '--time_window_weights', type=str, default='',
+        help='Time-window weights in ms, e.g. 80-400:2.5,0-80:0.5 (unspecified samples=1).',
+    )
     p.add_argument('--gamma_fmax', type=float, default=GAMMA_FMAX,
                    help='Upper Hz bound for gamma band in bandpower loss.')
+    p.add_argument(
+        '--sfreq', type=float, default=250.0,
+        help='Sampling rate in Hz for spectral losses (default 250 for EEG).',
+    )
     p.add_argument('--band_weights', type=str, default='',
                    help='Per-band weights, e.g. delta=2,beta=1.5,gamma=0.4')
-    p.add_argument('--hf_fmin', type=float, default=35.0)
-    p.add_argument('--hf_fmax', type=float, default=45.0)
-    p.add_argument('--low_freq_emphasis', type=float, default=0.0,
-                   help='Emphasize low-frequency bins in spectral L1 (e.g. 8.0 for delta).')
     p.add_argument(
         '--semantic_mode', type=str, default='ubp_margin', choices=SEMANTIC_MODES,
         help='clip: cos(brain(y_hat), clip) | ubp_margin: UBP anchor + InfoNCE.',

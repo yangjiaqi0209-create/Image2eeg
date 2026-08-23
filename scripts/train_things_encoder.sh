@@ -8,11 +8,8 @@
 #   bash scripts/train_things_encoder.sh 1-3
 
 set -euo pipefail
-cd "$(dirname "$0")/.."
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate UBP
-export PYTHONNOUSERSITE=1
-export PYTHONDONTWRITEBYTECODE=1
+# shellcheck disable=SC1091
+source "$(dirname "$0")/_env.sh"
 
 SUBS="${1:-1-10}"
 SEED="${SEED:-0}"

@@ -17,14 +17,14 @@ models:
         timesteps: ${timesteps}
 
 data:
-  data_dir: /home/ubuntu/dataset/EEG/alljoined-1.6M/ubp_preprocessed
+  # Paths are overridden by ``--dataset-profile alljoined_eeg``.
+  data_dir: ""
   image_root: data/things-eeg/Image_set_Resize
   selected_ch: "None"
   model_type: ${vision_backbone}
   train_batch_size: 256
   val_batch_size: 200
   test_batch_size: 200
-  uncertainty_aware: False
   blur_type:
     target: encoder.models.FoveaBlur
     params:

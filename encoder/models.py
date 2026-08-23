@@ -1,4 +1,4 @@
-"""Brain encoder, CLIP registry, and UBP blur transforms."""
+"""Brain encoder, CLIP registry, and fovea/sharp image transforms."""
 
 from __future__ import annotations
 
@@ -9,14 +9,12 @@ import numpy as np
 import torch
 import torch.nn as nn
 from PIL import Image
-from scipy.optimize import fsolve
-from torchvision.transforms import functional as TF
 
 
 # --- CLIP ---
 
 CLIP_BACKBONES: Dict[str, Dict] = {
-    'RN50': {'pretrained': 'openai', 'resize': (224, 224), 'z_dim': 1024},
+    'RN50': {'pretrained': 'openai', 'z_dim': 1024},
 }
 
 
@@ -27,15 +25,6 @@ def clip_z_dim(vision_backbone: str) -> int:
             f'choose from {list(CLIP_BACKBONES)}'
         )
     return CLIP_BACKBONES[vision_backbone]['z_dim']
-
-
-def clip_pretrained_tag(vision_backbone: str) -> str:
-    if vision_backbone not in CLIP_BACKBONES:
-        raise KeyError(
-            f'Unknown vision_backbone {vision_backbone!r}; '
-            f'choose from {list(CLIP_BACKBONES)}'
-        )
-    return CLIP_BACKBONES[vision_backbone]['pretrained']
 
 
 # --- Brain encoder ---
@@ -80,6 +69,8 @@ class EEGProjectLayer(nn.Module):
 # --- Blur / image transforms ---
 
 class DirectT:
+    """Identity resize (sharp CLIP input)."""
+
     def __init__(self, h: int = 224, w: int = 224):
         self.size = (w, h)
 
@@ -89,23 +80,12 @@ class DirectT:
         return x
 
 
-class UniformBlur:
-    def __init__(self, blur_kernel_size):
-        self.blur_kernel_size = blur_kernel_size
-
-    def __call__(self, img):
-        if isinstance(img, torch.Tensor):
-            img = TF.to_pil_image(img)
-        img_np = np.array(img)
-        if img_np.shape[2] == 3:
-            img_np = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
-        img_blur = cv2.GaussianBlur(img_np, (self.blur_kernel_size, self.blur_kernel_size), 0)
-        img_blur = cv2.cvtColor(img_blur, cv2.COLOR_BGR2RGB)
-        return Image.fromarray(img_blur)
-
-
 class FoveaBlur:
-    def __init__(self, h, w, blur_kernel_size, curve_type='exp', *args, **kwargs):
+    """Center-weighted Gaussian blur (exp falloff; matches manuscript UBP prior)."""
+
+    def __init__(self, h, w, blur_kernel_size, curve_type='exp', system_g=3, *args, **kwargs):
+        if curve_type != 'exp':
+            raise ValueError(f'Only curve_type=exp is supported, got {curve_type!r}')
         self.blur_kernel_size = blur_kernel_size
         self.mask = np.zeros((h, w), np.float32)
 
@@ -113,21 +93,13 @@ class FoveaBlur:
         max_distance = np.sqrt((h - center[1] - 1) ** 2 + (w - center[0] - 1) ** 2)
         c = 0.5
         center_resolution = 1 - c
-        edge_resolution = 0
+        edge_resolution = 0.0
 
-        def equations(vars):
-            t, r = vars
-            return [r * (t - np.sin(t)) - 1, -r * (1 - np.cos(t)) + 1.0]
-
-        _, r_solution = fsolve(equations, [1.0, 1.0])
-        self.r = r_solution
-
-        fun_degrade = getattr(self, curve_type, None)
         for i in range(h):
             for j in range(w):
                 distance = np.sqrt((i - center[1]) ** 2 + (j - center[0]) ** 2)
-                x0 = min(1, distance / max_distance)
-                y0 = fun_degrade(x0, **kwargs)
+                x0 = min(1.0, distance / max_distance)
+                y0 = np.exp(-system_g * x0)
                 self.mask[i, j] = edge_resolution + (center_resolution - edge_resolution) * y0
 
     def alphaBlend(self, img1, img2, mask):
@@ -149,25 +121,3 @@ class FoveaBlur:
         blended = self.alphaBlend(img, blured, 1 - self.mask)
         blended = cv2.cvtColor(blended, cv2.COLOR_BGR2RGB)
         return Image.fromarray(blended)
-
-    def linear(self, x, **kwargs):
-        return 1 - x
-
-    def exp(self, x, **kwargs):
-        system_g = kwargs.get('system_g', 4)
-        return np.exp(-system_g * x)
-
-    def quadratic(self, x, **kwargs):
-        return 1 - x ** 2
-
-    def log(self, x, **kwargs):
-        b = 1 / (np.e - 1)
-        a = np.log(b) + 1
-        return a - np.log(x + b)
-
-    def brachistochrone(self, x, **kwargs):
-        def equation(t):
-            return t - np.sin(t) - (x / self.r)
-
-        t0 = fsolve(equation, [1.0, 1.0])[0]
-        return -self.r * (1 - np.cos(t0)) + 1.0

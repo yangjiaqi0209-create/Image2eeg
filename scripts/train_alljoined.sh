@@ -11,12 +11,9 @@
 #   SMOKE=1 GPU=0 bash scripts/train_alljoined.sh
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
 # shellcheck disable=SC1091
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate UBP
+source "$(dirname "$0")/_env.sh"
 
-export UBP_EEG_DATA_ROOT="${UBP_EEG_DATA_ROOT:-/home/ubuntu/dataset/EEG}"
 DATA_DIR="${UBP_EEG_DATA_ROOT}/alljoined-1.6M/ubp_preprocessed"
 ENCODER_CFG="configs/eeg/alljoined_ubp.yaml"
 ENCODER_EXP="Alljoined"

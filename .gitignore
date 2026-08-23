@@ -1,37 +1,84 @@
-# --- Large local artifacts (do not commit) ---
-checkpoints/
-results/
-pretrained/
-# Large THINGS payloads only — keep data/registry.yaml + profiles tracked
-data/things-eeg/
+# =============================================================================
+# UBP EEG repo — what may be uploaded
+#   LICENSE, README.md, requirements.txt, COMMIT_CHECKLIST.md, .gitignore
+#   configs/  encoder/  predictor/  preprocess/  scripts/
+#   data/registry.yaml  data/profiles/  data/env.example  data/README.md
+#
+# Everything else below is local-only (datasets, weights, analysis, manuscript).
+# =============================================================================
 
-# Weights / binary caches
-*.pth
-*.ckpt
-*.pt
-*.npy
-*.npz
-*.pkl
-*.pickle
+# --- Entire trees never uploaded ---
+analysis/
+manuscript/
+checkpoints/
+pretrained/
+results/
+
+# --- Datasets (keep only small registry/profile templates under data/) ---
+data/things-eeg/
+data/things-meg/
+data/**/Preprocessed*/
+data/**/Image_set*/
+data/**/Image_feature*/
+data/**/ubp_preprocessed/
+data/**/official_fif/
+data/**/raw*/
+data/**/numba_cache/
+data/env.local
+
+# Extra safety: binary / neuroimaging / media payloads anywhere
+*.fif
+*.edf
+*.bdf
+*.vhdr
+*.vmrk
+*.eeg
+*.mat
 *.h5
 *.hdf5
+*.parquet
+*.arrow
+*.csv.gz
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.rar
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.bmp
+*.tif
+*.tiff
+*.mp4
+*.avi
+*.wav
+*.nii
+*.nii.gz
 
-# Analysis regenerable intermediates
-analysis/**/raw/
-analysis/**/raw_*/
-analysis/**/rsa_paper_demo/
-analysis/**/rsa_demo_test/
-analysis/**/figures_mean_eeg/
-analysis/**/figures_*scratch*/
-analysis/**/figures_shared_head/
-analysis/**/figures_exp_*/
-analysis/**/figures_no_bandcorr/
-analysis/**/figures_n4/
-analysis/**/figures_nod/
+# --- Model weights / tensors / checkpoints ---
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.bin
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.onnx
+*.params
+*.weights
+*.joblib
 
-# Keep final paper figures tracked:
-#   analysis/eeg_gen_eval/figures/
-#   analysis/eeg_gen_eval/figures_alljoined/
+# --- Secrets / machine-local env ---
+.env
+.env.*
+!.env.example
+data/env.local
 
 # --- Python ---
 __pycache__/
@@ -39,17 +86,40 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
+.eggs/
+dist/
+build/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.venv/
+venv/
+env/
 
-# --- Notebooks / IDE ---
+# --- Notebooks / IDE / OS ---
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
 .vscode/
 .idea/
+.cursor/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
 
-# --- LaTeX build ---
+# --- Training / tool caches ---
+**/lightning_logs/
+numba_cache/
+**/numba_cache/
+wandb/
+runs/
+mlruns/
+/tmp/
+
+# --- LaTeX build (if manuscript/ is ever force-added) ---
 *.aux
 *.log
 *.out
@@ -59,15 +129,4 @@ __pycache__/
 *.fls
 *.bbl
 *.blg
-manuscript/texmf/
-manuscript/*.pdf
-
-# --- Misc ---
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
-**/lightning_logs/
-numba_cache/
-**/numba_cache/
-/tmp/
+*.pdf

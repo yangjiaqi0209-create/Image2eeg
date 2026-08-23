@@ -21,7 +21,6 @@ data:
   train_batch_size: 1024
   val_batch_size: 200
   test_batch_size: 200
-  uncertainty_aware: False
   blur_type:
     target: encoder.models.FoveaBlur
     params:

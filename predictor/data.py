@@ -1,11 +1,10 @@
-"""Dataset: CLIP features (sharp / uniform / fovea / UBP) + averaged EEG."""
+"""Dataset: CLIP features (sharp / fovea) + averaged EEG."""
 
 from __future__ import annotations
 
 import gc
 import glob
 import os
-import random
 from typing import List, Optional, Tuple
 
 from torch import Tensor
@@ -16,19 +15,19 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from PIL import Image
-from torch.utils.data import DataLoader, Dataset, TensorDataset
+from torch.utils.data import DataLoader, TensorDataset
 from torchvision import transforms
 from tqdm import tqdm
 
 from encoder.data import THINGS_CHANNELS, resolve_clip_pretrained
-from encoder.models import CLIP_BACKBONES, clip_z_dim
+from encoder.models import CLIP_BACKBONES
 from encoder.utils import get_device, instantiate_from_config
 
 CHANNELS = THINGS_CHANNELS
 
-PRETRAIN_MAP = {k: {'pretrained': v['pretrained'], 'z_dim': v['z_dim']} for k, v in CLIP_BACKBONES.items()}
+PRETRAIN_MAP = {k: {'pretrained': v['pretrained']} for k, v in CLIP_BACKBONES.items()}
 
-CLIP_INPUT_CHOICES = ('sharp', 'uniform', 'fovea', 'ubp')
+CLIP_INPUT_CHOICES = ('sharp', 'fovea')
 
 
 def _load_eeg_tensor(
@@ -67,11 +66,6 @@ def _load_eeg_tensor(
 def _transform_config(clip_input: str, blur_kernel_size: int) -> dict:
     if clip_input == 'sharp':
         return {'target': 'encoder.models.DirectT', 'params': {}}
-    if clip_input == 'uniform':
-        return {
-            'target': 'encoder.models.UniformBlur',
-            'params': {'blur_kernel_size': blur_kernel_size},
-        }
     return {
         'target': 'encoder.models.FoveaBlur',
         'params': {
@@ -87,14 +81,8 @@ def _transform_config(clip_input: str, blur_kernel_size: int) -> dict:
 def _feature_subdir(clip_input: str) -> str:
     return {
         'sharp': 'DirectT',
-        'uniform': 'UniformBlur',
         'fovea': 'FoveaBlur',
-        'ubp': 'FoveaBlur',
     }[clip_input]
-
-
-def _uses_multi_blur_train(clip_input: str, blur_delta: int) -> bool:
-    return clip_input == 'ubp' and blur_delta > 0
 
 
 @torch.no_grad()
@@ -205,55 +193,13 @@ def load_clip_features(
     return torch.stack([feat_dict[p] for p in img_paths.tolist()]).float()
 
 
-def load_blur_features(
-    img_paths: np.ndarray,
-    *,
-    data_dir: str,
-    model_type: str = 'RN50',
-    blur_kernel_size: int = 51,
-    mode: str = 'train',
-    tag: str = 'medium',
-    device: Optional[torch.device] = None,
-    clip_input: str = 'fovea',
-) -> torch.Tensor:
-    """Backward-compatible alias (default: fixed fovea medium blur)."""
-    return load_clip_features(
-        img_paths,
-        data_dir=data_dir,
-        model_type=model_type,
-        clip_input=clip_input,
-        blur_kernel_size=blur_kernel_size,
-        mode=mode,
-        tag=tag,
-        device=device,
-    )
-
-
-class RandomBlurTrainDataset(Dataset):
-    """Training: randomly sample medium or high blur CLIP features (UBP mode only)."""
-
-    def __init__(self, clip_medium: torch.Tensor, clip_high: torch.Tensor, eeg: torch.Tensor):
-        assert len(clip_medium) == len(clip_high) == len(eeg)
-        self.clip_medium = clip_medium
-        self.clip_high = clip_high
-        self.eeg = eeg
-
-    def __len__(self) -> int:
-        return len(self.eeg)
-
-    def __getitem__(self, index: int):
-        clip = self.clip_medium[index] if random.random() < 0.5 else self.clip_high[index]
-        return clip, self.eeg[index]
-
-
 def load_subject_splits(
     sub: int,
     *,
     data_dir: str,
     model_type: str = 'RN50',
-    clip_input: str = 'ubp',
+    clip_input: str = 'fovea',
     blur_kernel_size: int = 51,
-    blur_delta: int = 6,
     timesteps: Tuple[int, int] = (0, 250),
     selected_ch: Optional[List[str]] = None,
     seed: int = 2023,
@@ -263,17 +209,13 @@ def load_subject_splits(
     feature_dir: Optional[str] = None,
     avg: bool = True,
 ) -> Tuple[
-    torch.Tensor, torch.Tensor, torch.Tensor,
     torch.Tensor, torch.Tensor,
     torch.Tensor, torch.Tensor,
+    Optional[torch.Tensor], Optional[torch.Tensor],
 ]:
     """
     Returns:
-        clip_train_primary, clip_train_high, eeg_train,
-        clip_val, eeg_val,
-        clip_test, eeg_test
-
-    For non-UBP clip_input, clip_train_high duplicates primary (unused by loader).
+        clip_train, eeg_train, clip_val, eeg_val, clip_test, eeg_test
     """
     sub_dir = os.path.join(data_dir, f'sub-{sub:02d}')
     train_path = os.path.join(sub_dir, 'train.pt')
@@ -281,27 +223,15 @@ def load_subject_splits(
     if not os.path.isfile(train_path):
         raise FileNotFoundError(train_path)
 
-    multi = _uses_multi_blur_train(clip_input, blur_delta)
-    high_kernel = blur_kernel_size + blur_delta
-
     eeg_train, img_train = _load_eeg_tensor(
         train_path, timesteps=timesteps, avg=avg, selected_ch=selected_ch,
     )
-    clip_train_primary = load_clip_features(
+    clip_train = load_clip_features(
         img_train, data_dir=data_dir, model_type=model_type,
         clip_input=clip_input, blur_kernel_size=blur_kernel_size,
         mode='train', tag='medium', device=device,
         image_root=image_root, feature_dir=feature_dir,
     )
-    if multi:
-        clip_train_high = load_clip_features(
-            img_train, data_dir=data_dir, model_type=model_type,
-            clip_input='fovea', blur_kernel_size=high_kernel,
-            mode='train', tag='high', device=device,
-            image_root=image_root, feature_dir=feature_dir,
-        )
-    else:
-        clip_train_high = clip_train_primary
 
     val_path = os.path.join(sub_dir, 'val.pt')
     if os.path.isfile(val_path):
@@ -314,8 +244,7 @@ def load_subject_splits(
             mode='val', tag='medium', device=device,
             image_root=image_root, feature_dir=feature_dir,
         )
-        clip_tr_primary = clip_train_primary
-        clip_tr_high = clip_train_high
+        clip_tr = clip_train
         eeg_tr = eeg_train
     else:
         rng = np.random.default_rng(seed)
@@ -325,10 +254,9 @@ def load_subject_splits(
         val_idx = perm[:n_val]
         train_idx = perm[n_val:]
 
-        clip_tr_primary = clip_train_primary[train_idx]
-        clip_tr_high = clip_train_high[train_idx]
+        clip_tr = clip_train[train_idx]
         eeg_tr = eeg_train[train_idx]
-        clip_va = clip_train_primary[val_idx]
+        clip_va = clip_train[val_idx]
         eeg_va = eeg_train[val_idx]
 
     if os.path.isfile(test_path):
@@ -344,29 +272,22 @@ def load_subject_splits(
     else:
         clip_test, eeg_test = None, None
 
-    return clip_tr_primary, clip_tr_high, eeg_tr, clip_va, eeg_va, clip_test, eeg_test
+    return clip_tr, eeg_tr, clip_va, eeg_va, clip_test, eeg_test
 
 
 def make_loaders(
-    clip_train_primary: torch.Tensor,
-    clip_train_high: torch.Tensor,
+    clip_train: torch.Tensor,
     eeg_train: torch.Tensor,
     clip_val: torch.Tensor,
     eeg_val: torch.Tensor,
     *,
-    multi_blur_train: bool = True,
     batch_size: int = 64,
     num_workers: int = 0,
     seed: int = 2023,
 ) -> Tuple[DataLoader, DataLoader]:
     g = torch.Generator()
     g.manual_seed(seed)
-
-    if multi_blur_train:
-        train_ds = RandomBlurTrainDataset(clip_train_primary, clip_train_high, eeg_train)
-    else:
-        train_ds = TensorDataset(clip_train_primary, eeg_train)
-
+    train_ds = TensorDataset(clip_train, eeg_train)
     val_ds = TensorDataset(clip_val, eeg_val)
     train_loader = DataLoader(
         train_ds, batch_size=batch_size, shuffle=True,
@@ -386,22 +307,12 @@ def _checkpoint_args(ckpt_path: str) -> dict:
     return ckpt.get('args') or {}
 
 
-def clip_input_from_checkpoint(ckpt_path: str, default: str = 'ubp') -> str:
+def clip_input_from_checkpoint(ckpt_path: str, default: str = 'fovea') -> str:
     return _checkpoint_args(ckpt_path).get('clip_input', default)
 
 
 def vision_backbone_from_checkpoint(ckpt_path: str, default: str = 'RN50') -> str:
     return _checkpoint_args(ckpt_path).get('vision_backbone', default)
-
-
-def z_dim_from_checkpoint(ckpt_path: str, default: int = 1024) -> int:
-    args = _checkpoint_args(ckpt_path)
-    if 'z_dim' in args:
-        return int(args['z_dim'])
-    backbone = args.get('vision_backbone')
-    if backbone:
-        return clip_z_dim(backbone)
-    return default
 
 
 # --- Frozen UBP brain encoder ---

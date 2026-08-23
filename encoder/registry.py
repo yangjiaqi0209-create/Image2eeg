@@ -22,17 +22,20 @@ CLI:
 from __future__ import annotations
 
 import importlib
-import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import yaml
 
+from encoder.paths import (
+    eeg_data_root as default_eeg_data_root,
+    repo_root as default_repo_root,
+)
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = REPO_ROOT / "data" / "registry.yaml"
-DEFAULT_EEG_DATA_ROOT = os.environ.get("UBP_EEG_DATA_ROOT", "/home/ubuntu/dataset/EEG")
 
 
 @dataclass(frozen=True)
@@ -100,9 +103,6 @@ class DatasetProfile:
             data["channels"] = self.channels
         return data
 
-    def brain_model_params(self, z_dim: int = 1024) -> Dict[str, Any]:
-        return {"c_num": self.c_num, "z_dim": z_dim, "timesteps": self.timesteps}
-
     def has_separate_val(self) -> bool:
         return bool((self.raw.get("train") or {}).get("separate_val", False))
 
@@ -130,8 +130,15 @@ def _resolve_channels(ref: Optional[str]) -> List[str]:
     return list(getattr(mod, attr))
 
 
-def _format_path(value: str, repo_root: Path, eeg_data_root: str) -> str:
-    return value.format(repo_root=str(repo_root), eeg_data_root=eeg_data_root)
+def _format_path(
+    value: str,
+    repo_root: Path,
+    eeg_data_root: str,
+) -> str:
+    return value.format(
+        repo_root=str(repo_root),
+        eeg_data_root=eeg_data_root,
+    )
 
 
 def _load_registry_index() -> Dict[str, Any]:
@@ -156,8 +163,8 @@ def get_dataset(
     if dataset_id not in index["datasets"]:
         raise KeyError(f"Unknown dataset {dataset_id!r}; choose from {list_datasets()}")
 
-    repo_root = Path(repo_root or os.environ.get("UBP_REPO_ROOT", REPO_ROOT))
-    eeg_data_root = eeg_data_root or DEFAULT_EEG_DATA_ROOT
+    repo_root = Path(repo_root or default_repo_root())
+    eeg_root = eeg_data_root or default_eeg_data_root()
 
     entry = index["datasets"][dataset_id]
     profile_path = REGISTRY_PATH.parent / entry["profile"]
@@ -165,7 +172,7 @@ def get_dataset(
         raw = yaml.safe_load(f)
 
     paths = {
-        k: _format_path(v, repo_root, eeg_data_root)
+        k: _format_path(v, repo_root, eeg_root)
         for k, v in (raw.get("paths") or {}).items()
     }
     channels = _resolve_channels(raw.get("channels_ref"))
@@ -202,6 +209,9 @@ def apply_profile_to_config(config, profile_id: str):
     config.c_num = prof.c_num
     config.timesteps = list(prof.timesteps)
     config.dataset_profile = profile_id
+    exp_name = (prof.raw.get("train") or {}).get("encoder_exp")
+    if exp_name:
+        config.name = exp_name
 
     if prof.raw.get("trial_format"):
         data.trial_format = prof.raw["trial_format"]

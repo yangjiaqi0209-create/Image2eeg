@@ -8,14 +8,13 @@
 #   FORCE=1 bash scripts/preprocess_alljoined_all.sh     # overwrite existing
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate UBP
+# shellcheck disable=SC1091
+source "$(dirname "$0")/_env.sh"
 
-EEG_ROOT="${UBP_EEG_DATA_ROOT:-/home/ubuntu/dataset/EEG}"
+EEG_ROOT="${UBP_EEG_DATA_ROOT}"
 HF_ROOT="${EEG_ROOT}/alljoined-1.6M/raw_hf"
 OUT_DIR="${EEG_ROOT}/alljoined-1.6M/ubp_preprocessed"
-IMAGE_ROOT="${UBP_REPO_ROOT:-$(pwd)}/data/things-eeg/Image_set_Resize"
+IMAGE_ROOT="${UBP_REPO_ROOT}/data/things-eeg/Image_set_Resize"
 SMOKE="${SMOKE:-0}"
 FORCE="${FORCE:-0}"
 

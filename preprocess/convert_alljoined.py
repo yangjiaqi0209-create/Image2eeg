@@ -38,6 +38,7 @@ import pandas as pd
 import torch
 
 from encoder.data import ALLJOINED_CHANNELS
+from encoder.paths import eeg_data_root, repo_root
 
 RE_SFREQ = 250.0
 POST_STIM_SAMPLES = 250
@@ -45,8 +46,8 @@ N_TRAIN_IMAGES = 16540
 N_TEST_IMAGES = 200
 TRAIN_REPS = 4
 TEST_REPS = 80
-DEFAULT_EEG_ROOT = os.environ.get('UBP_EEG_DATA_ROOT', '/home/ubuntu/dataset/EEG')
-DEFAULT_REPO_ROOT = os.environ.get('UBP_REPO_ROOT', str(_REPO))
+DEFAULT_EEG_ROOT = eeg_data_root()
+DEFAULT_REPO_ROOT = str(repo_root())
 
 
 def get_args():

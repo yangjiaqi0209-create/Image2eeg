@@ -17,21 +17,15 @@ def get_obj_from_str(string, reload=False):
 
 def instantiate_from_config(config):
     if "target" not in config:
-        if config == '__is_first_stage__':
-            return None
-        elif config == "__is_unconditional__":
-            return None
         raise KeyError("Expected key `target` to instantiate.")
-    return get_obj_from_str(config["target"])(
-        **(config.get("params", dict()) if config.get("params", dict()) else {})
-    )
+    params = config.get("params") or {}
+    return get_obj_from_str(config["target"])(**params)
 
 
 def update_config(args, config):
     for key in config.keys():
-        if hasattr(args, key):
-            if getattr(args, key) is not None:
-                config[key] = getattr(args, key)
+        if hasattr(args, key) and getattr(args, key) is not None:
+            config[key] = getattr(args, key)
     for key in args.__dict__.keys():
         config[key] = getattr(args, key)
     return config
@@ -68,9 +62,6 @@ def get_device(gpu_ids):
 
 
 class ClipLoss(nn.Module):
-    def __init__(self):
-        super().__init__()
-
     def forward(self, image_features, text_features, logit_scale):
         device = image_features.device
         logits_per_image = logit_scale * image_features @ text_features.T

@@ -15,6 +15,8 @@ data/
 
 Alljoined `.pt` live outside the repo: `$UBP_EEG_DATA_ROOT/alljoined-1.6M/`（说明见根 `README.md` 的 Alljoined 小节）。
 
+本机可把绝对路径写进 `data/env.local`（gitignore）。
+
 ```bash
 python -m encoder.registry list
 python -m encoder.registry show things_eeg

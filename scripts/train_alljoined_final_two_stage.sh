@@ -22,16 +22,11 @@
 #   SMOKE=1 GPU=0 bash scripts/train_alljoined_final_two_stage.sh
 
 set -euo pipefail
-cd "$(dirname "$0")/.."
 # shellcheck disable=SC1091
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate UBP
-export PYTHONNOUSERSITE=1
-export PYTHONDONTWRITEBYTECODE=1
+source "$(dirname "$0")/_env.sh"
 
-export UBP_EEG_DATA_ROOT="${UBP_EEG_DATA_ROOT:-/home/ubuntu/dataset/EEG}"
 DATA_DIR="${UBP_EEG_DATA_ROOT}/alljoined-1.6M/ubp_preprocessed"
-IMAGE_ROOT="${UBP_REPO_ROOT:-$(pwd)}/data/things-eeg/Image_set_Resize"
+IMAGE_ROOT="${UBP_REPO_ROOT}/data/things-eeg/Image_set_Resize"
 FEATURE_DIR="${UBP_EEG_DATA_ROOT}/alljoined-1.6M/clip_features/FoveaBlur"
 ENCODER_EXP="Alljoined"
 ENCODER_ROOT="checkpoints/encoder/Alljoined"
@@ -82,7 +77,6 @@ common_data_args=(
   --image_root "${IMAGE_ROOT}"
   --feature_dir "${FEATURE_DIR}"
   --clip_input "${CLIP_INPUT}"
-  --blur_delta 0
   --n_val "${N_VAL}"
   --n_layers "${N_LAYERS}"
   --generator_arch full
@@ -170,7 +164,7 @@ run_stage2() {
     --ubp_ckpt "${UBP_CKPT}" \
     --semantic_mode ubp_margin --lambda_sem 0 \
     --lambda_time 1.0 --lambda_corr 0.8 \
-    --lambda_freq 0 --lambda_band 0 --lambda_hf 0 \
+    --lambda_freq 0 --lambda_band 0 \
     --lambda_band_corr 0.32 \
     --band_weights "delta=2.0,beta=1.5,gamma=1.0" \
     --gamma_fmax 45 \

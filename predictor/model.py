@@ -130,6 +130,7 @@ class MLP_TCN_Generator(nn.Module):
         arch: GeneratorArch = 'full',
         tcn_dilations: tuple[int, ...] | str | None = None,
         tcn_residual: bool = True,
+        n_spatial: int = 0,
     ):
         super().__init__()
         if arch not in GENERATOR_ARCH_CHOICES:
@@ -140,7 +141,8 @@ class MLP_TCN_Generator(nn.Module):
         self.hidden = hidden
         self.n_layers = n_layers
         self.img_dim = img_dim
-        self.per_channel_heads = per_channel_heads
+        self.per_channel_heads = per_channel_heads and n_spatial <= 0
+        self.n_spatial = int(n_spatial) if n_spatial else 0
         self.tcn_dilations = parse_tcn_dilations(tcn_dilations)
         self.tcn_residual = tcn_residual
         self.use_transformer = arch != 'tcn_only'
@@ -180,12 +182,22 @@ class MLP_TCN_Generator(nn.Module):
         else:
             self.temporal_refine = None
 
-        if per_channel_heads:
+        if self.n_spatial > 0:
+            self.latent_proj = nn.Linear(hidden, self.n_spatial)
+            self.spatial_maps = nn.Parameter(torch.empty(self.n_spatial, n_channels))
+            nn.init.orthogonal_(self.spatial_maps)
+            self.channel_heads = None
+            self.out_proj = None
+        elif per_channel_heads:
+            self.latent_proj = None
+            self.spatial_maps = None
             self.channel_heads = nn.ModuleList(
                 nn.Linear(hidden, 1) for _ in range(n_channels)
             )
             self.out_proj = None
         else:
+            self.latent_proj = None
+            self.spatial_maps = None
             self.channel_heads = None
             self.out_proj = nn.Linear(hidden, n_channels)
 
@@ -196,14 +208,17 @@ class MLP_TCN_Generator(nn.Module):
             'img_dim': self.img_dim,
             'dropout': 0.1,
             'per_channel_heads': self.per_channel_heads,
+            'n_spatial': self.n_spatial,
             'generator_arch': self.arch,
             'tcn_dilations': self.tcn_dilations,
             'tcn_residual': self.tcn_residual,
-            'decoder_attn_mode': 'no_self' if self.arch == 'no_self_attn' else 'full',
         }
 
     def _decode_channels(self, x: Tensor) -> Tensor:
         """x: [B, T, H] -> [B, C, T]"""
+        if self.spatial_maps is not None:
+            z = self.latent_proj(x)
+            return torch.einsum('btk,kc->bct', z, self.spatial_maps)
         if self.channel_heads is not None:
             channels = [head(x).squeeze(-1) for head in self.channel_heads]
             return torch.stack(channels, dim=1)
@@ -230,6 +245,26 @@ class MLP_TCN_Generator(nn.Module):
         return self._decode_channels(x)
 
 
+@torch.no_grad()
+def init_spatial_maps_pca(
+    model: MLP_TCN_Generator,
+    eeg: Tensor,
+    max_rows: int = 80000,
+) -> None:
+    """Initialize spatial_maps (K, C) from PCA of train EEG [N, C, T]."""
+    if model.spatial_maps is None:
+        return
+    n, c, t = eeg.shape
+    x = eeg.permute(0, 2, 1).reshape(n * t, c)
+    if x.shape[0] > max_rows:
+        idx = torch.randperm(x.shape[0], device=x.device)[:max_rows]
+        x = x[idx]
+    x = x - x.mean(dim=0, keepdim=True)
+    q = int(model.spatial_maps.shape[0])
+    _, _, v = torch.pca_lowrank(x.float(), q=q, niter=4)
+    model.spatial_maps.copy_(v.T.contiguous())
+
+
 def build_generator(
     arch: str,
     *,
@@ -242,6 +277,7 @@ def build_generator(
     dropout: float = 0.1,
     tcn_dilations: tuple[int, ...] | str | None = None,
     tcn_residual: bool = True,
+    n_spatial: int = 0,
 ) -> MLP_TCN_Generator:
     """Factory for manuscript generator architectures."""
     return MLP_TCN_Generator(
@@ -255,10 +291,11 @@ def build_generator(
         arch=arch,  # type: ignore[arg-type]
         tcn_dilations=tcn_dilations,
         tcn_residual=tcn_residual,
+        n_spatial=n_spatial,
     )
 
 
-def load_generator_from_checkpoint(
+def load_any_generator_from_checkpoint(
     ckpt: dict,
     n_channels: int,
     seq_len: int,
@@ -275,10 +312,7 @@ def load_generator_from_checkpoint(
         per_channel_heads=args.get('per_channel_heads', True),
         tcn_dilations=args.get('tcn_dilations'),
         tcn_residual=args.get('tcn_residual', True),
+        n_spatial=int(args.get('n_spatial', 0) or 0),
     )
     model.load_state_dict(ckpt['model_state_dict'], strict=True)
     return model
-
-
-# Back-compat alias used by evaluate / analysis
-load_any_generator_from_checkpoint = load_generator_from_checkpoint
