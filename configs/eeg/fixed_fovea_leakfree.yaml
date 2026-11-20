@@ -1,0 +1,51 @@
+timesteps: [0,250]
+
+blur_kernel_size: 51
+system_g: 3
+
+# Leak-free THINGS-EEG2 encoder. Checkpoints stay out of archive/legacy_paper/checkpoints/encoder/THINGSEEG2.
+name: "THINGSEEG2_leakfree"
+
+models:
+  brain:
+    target: "encoder.models.${brain_backbone}"
+    params:
+        c_num: 63
+        z_dim: ${z_dim}
+        timesteps: ${timesteps}
+
+data:
+  data_dir: data/processed/things_eeg2/preprocessed
+  img_feature_dir: data/processed/things_eeg2/encoder_features
+  image_root: data/things-eeg/Image_set_Resize
+  selected_ch: "None"
+  model_type: ${vision_backbone}
+  train_batch_size: 1024
+  val_batch_size: 200
+  test_batch_size: 200
+  blur_type:
+    target: encoder.models.FoveaBlur
+    params:
+          h: 224
+          w: 224
+          blur_kernel_size: ${blur_kernel_size}
+          curve_type: exp
+          system_g: ${system_g}
+  train_avg: True
+  val_avg: True
+  test_avg: True
+  # The test split is not opened during training.
+  defer_test: True
+  timesteps: ${timesteps}
+
+train:
+  epoch: ${epoch}
+  optimizer: AdamW
+  lr: ${lr}
+  # Select the checkpoint by validation top-1. Patience equals the epoch
+  # budget, so early stopping does not fire before that budget is spent.
+  # ModelCheckpoint keeps the maximum val_top1_acc (save_top_k=1).
+  monitor_val: True
+  early_stop_patience: 50
+
+save_dir: 'checkpoints/things_eeg2/encoder'

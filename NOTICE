@@ -1,0 +1,40 @@
+Image2EEG
+Copyright Jiaqi Yang
+
+This project is licensed under the Apache License, Version 2.0.
+You may obtain a copy of the License in the LICENSE file at the
+repository root, or at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+The encoder is derived from Uncertainty-aware Blur Prior (UBP):
+
+    Haitao Wu, Qing Li, Changqing Zhang, Zhen He, and Xiaomin Ying.
+    Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior.
+    Proceedings of the IEEE/CVF Conference on Computer Vision and
+    Pattern Recognition (CVPR), 2025, pp. 2246–2257.
+    https://github.com/HaitaoWuTJU/Uncertainty-aware-Blur-Prior
+
+That upstream code is Apache License 2.0. This NOTICE does not
+change the upstream copyright.
+
+The image-to-EEG generator, dataset adapters, leak-free training
+and evaluation code in this repository are additional work by
+Jiaqi Yang and are distributed under the same Apache License 2.0.
+
+Third-party code not covered by the root Apache License
+--------------------------------------------------------
+
+experiments/external_baselines/upstream/ is copied from
+
+    https://github.com/gifale95/eeg_encoding
+    commit 101997d4f14c41b615bcaf8c0907740106d260c5
+
+and remains under the Creative Commons Attribution-NonCommercial
+4.0 International License (CC BY-NC 4.0). The license text is
+experiments/external_baselines/upstream/LICENSE.md. Those files
+may not be used for commercial purposes. The Apache License at
+the repository root does not apply to them.
+
+THINGS-EEG2, Alljoined, CLIP, and AlexNet weights are separate
+works. This NOTICE does not license those datasets or weights.

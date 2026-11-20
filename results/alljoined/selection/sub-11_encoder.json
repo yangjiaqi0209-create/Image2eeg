@@ -1,0 +1,10 @@
+{
+  "checkpoint": "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/checkpoints/encoder/Alljoined_things_matched_buffered/sub-11_seed0/checkpoints/epoch=4-step=80.ckpt",
+  "sha256": "2c33cf71c3b59f873f99d56cfed4af3f2e3c70b3febfb86bd2fd8b68fd8262ca",
+  "epoch": 4,
+  "callbacks": {
+    "EarlyStopping{'monitor': 'val_top1_acc', 'mode': 'max'}": "{'wait_count': 0, 'stopped_epoch': 0, 'best_score': tensor(0.0122), 'patience': 50}",
+    "ModelCheckpoint{'monitor': 'val_top1_acc', 'mode': 'max', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}": "{'monitor': 'val_top1_acc', 'best_model_score': tensor(0.0122), 'best_model_path': '/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/checkpoints/encoder/Alljoined_things_matched_buffered/sub-11_seed0/checkpoints/epoch=4-step=80.ckpt', 'current_score': tensor(0.0122), 'dirpath': '/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/checkpoints/encoder/Alljoined_things_matched_buffered/sub-11_seed0/checkpoints', 'best_k_models': {'/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/checkpoints/encoder/Alljoined_things_matched_buffered/sub-11_seed0/checkpoints/epoch=4-step=80.ckpt': tensor(0.0122)}, 'kth_best_model_path': '/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/checkpoints/encoder/Alljoined_things_matched_buffered/sub-11_seed0/checkpoints/epoch=4-step=80.ckpt', 'kth_value': tensor(0.0122), 'last_model_path': '/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/checkpoints/encoder/Alljoined_things_matched_buffered/sub-11_seed0/checkpoints/last.ckpt'}"
+  },
+  "rule": "best validation Top-1, fixed 50 epochs; test unread"
+}

@@ -1,0 +1,213 @@
+
+{"start": 1794313582.4596694, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", "--subject", "15"]}
+Traceback (most recent call last):
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connection.py", line 239, in _new_conn
+    sock = connection.create_connection(
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connectionpool.py", line 779, in urlopen
+    self._prepare_proxy(conn)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connectionpool.py", line 1074, in _prepare_proxy
+    conn.connect()
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connection.py", line 827, in connect
+    self.sock = sock = self._new_conn()
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connection.py", line 254, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+urllib3.exceptions.ProxyError: ('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused"))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/util/retry.py", line 555, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/Alljoined/Alljoined-1.6M/resolve/2596eb5cc116a4d2254370f96549752b5ac8747b/preprocessed_eeg/sub-15/stim_order.parquet (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused")))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", line 84, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--subject',type=int,required=True);main(p.parse_args().subject)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", line 23, in main
+    remote.fetch(f'{remote.HF}/datasets/{remote.REPO}/resolve/{revision}/{rel}',dest/'official'/rel)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/recover_sub01_sources.py", line 56, in fetch
+    with requests.get(url, timeout=(30, 120), stream=True) as r:
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/api.py", line 87, in get
+    return request("get", url, params=params, **kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/api.py", line 71, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/adapters.py", line 723, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/Alljoined/Alljoined-1.6M/resolve/2596eb5cc116a4d2254370f96549752b5ac8747b/preprocessed_eeg/sub-15/stim_order.parquet (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused")))
+
+{"start": 1794555938.2168505, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", "--subject", "15"]}
+raw ready raw_eeg/sub-15/session_01/block_04/Subject 15, Session 1, Block 4 Recording_FLEX2_213075_2025.04.05T11.17.29.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_02/Subject 15, Session 1, Block 2 Recording_FLEX2_213075_2025.04.05T11.06.42.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_01/Subject 15, Session 1, Block 1 Recording_FLEX2_213075_2025.04.05T11.00.53.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_06/Subject 15, Session 1, Block 6 Recording_FLEX2_213075_2025.04.05T11.28.34.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_07/Subject 15, Session 1, Block 7 Recording_FLEX2_213075_2025.04.05T11.34.34.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_09/Subject 15, Session 1, Block 9 Recording_FLEX2_213075_2025.04.05T11.46.22.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_10/Subject 15, Session 1, Block 10 Recording_FLEX2_213075_2025.04.05T11.51.59.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_11/Subject 15, Session 1, Block 11 Recording_FLEX2_213075_2025.04.05T11.57.56.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_12/Subject 15, Session 1, Block 12 Recording_FLEX2_213075_2025.04.05T12.03.31.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_13/Subject 15, Session 1, Block 13 Recording_FLEX2_213075_2025.04.05T12.09.11.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_14/Subject 15, Session 1, Block 14 Recording_FLEX2_213075_2025.04.05T12.14.45.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_15/Subject 15, Session 1, Block 15 Recording_FLEX2_213075_2025.04.05T12.20.22.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_16/Subject 15, Session 1, Block 16 Recording_FLEX2_213075_2025.04.05T12.26.02.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_17/Subject 15, Session 1, Block 17 Recording_FLEX2_213075_2025.04.05T12.31.30.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_18/Subject 15, Session 1, Block 18 Recording_FLEX2_213075_2025.04.05T12.37.13.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_03/Subject 15, Session 1, Block 3 Recording_FLEX2_213075_2025.04.05T11.11.59.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_01/Subject 15, Session 2, Block 1 Recording_FLEX2_213075_2025.04.10T15.17.20.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_08/Subject 15, Session 1, Block 8 Recording_FLEX2_213075_2025.04.05T11.40.48.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_03/Subject 15, Session 2, Block 3 Recording_FLEX2_213075_2025.04.10T15.28.12.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_02/Subject 15, Session 2, Block 2 Recording_FLEX2_213075_2025.04.10T15.22.38.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_04/Subject 15, Session 2, Block 4 Recording_FLEX2_213075_2025.04.10T15.33.30.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_05/Subject 15, Session 2, Block 5 Recording_FLEX2_213075_2025.04.10T15.39.13.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_06/Subject 15, Session 2, Block 6 Recording_FLEX2_213075_2025.04.10T15.44.57.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_07/Subject 15, Session 2, Block 7 Recording_FLEX2_213075_2025.04.10T15.53.01.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_08/Subject 15, Session 2, Block 8 Recording_FLEX2_213075_2025.04.10T15.58.40.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_09/Subject 15, Session 2, Block 9 Recording_FLEX2_213075_2025.04.10T16.04.46.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_10/Subject 15, Session 2, Block 10 Recording_FLEX2_213075_2025.04.10T16.10.59.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_11/Subject 15, Session 2, Block 11 Recording_FLEX2_213075_2025.04.10T16.19.31.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_12/Subject 15, Session 2, Block 12 Recording_FLEX2_213075_2025.04.10T16.25.17.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_13/Subject 15, Session 2, Block 13 Recording_FLEX2_213075_2025.04.10T16.31.34.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_14/Subject 15, Session 2, Block 14 Recording_FLEX2_213075_2025.04.10T16.37.19.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_15/Subject 15, Session 2, Block 15 Recording_FLEX2_213075_2025.04.10T16.43.00.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_05/Subject 15, Session 1, Block 5 Recording_FLEX2_213075_2025.04.05T11.22.40.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_16/Subject 15, Session 2, Block 16 Recording_FLEX2_213075_2025.04.10T16.48.38.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_17/Subject 15, Session 2, Block 17 Recording_FLEX2_213075_2025.04.10T16.54.18.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_18/Subject 15, Session 2, Block 18 Recording_FLEX2_213075_2025.04.10T17.00.19.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_01/Subject 15, Session 3, Block 1 Recording_FLEX2_213075_2025.04.11T15.20.00.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_03/Subject 15, Session 3, Block 3 Recording_FLEX2_213075_2025.04.11T15.30.40.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_02/Subject 15, Session 3, Block 2 Recording_FLEX2_213075_2025.04.11T15.25.04.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_04/Subject 15, Session 3, Block 4 Recording_FLEX2_213075_2025.04.11T15.35.43.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_05/Subject 15, Session 3, Block 5 Recording_FLEX2_213075_2025.04.11T15.40.49.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_06/Subject 15, Session 3, Block 6 Recording_FLEX2_213075_2025.04.11T15.46.22.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_07/Subject 15, Session 3, Block 7 Recording_FLEX2_213075_2025.04.11T15.51.49.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_08/Subject 15, Session 3, Block 8 Recording_FLEX2_213075_2025.04.11T15.58.14.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_09/Subject 15, Session 3, Block 9 Recording_FLEX2_213075_2025.04.11T16.03.44.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_10/Subject 15, Session 3, Block 10 Recording_FLEX2_213075_2025.04.11T16.09.29.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_11/Subject 15, Session 3, Block 11 Recording_FLEX2_213075_2025.04.11T16.14.56.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_12/Subject 15, Session 3, Block 12 Recording_FLEX2_213075_2025.04.11T16.20.23.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_14/Subject 15, Session 3, Block 14 Recording_FLEX2_213075_2025.04.11T16.31.22.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_13/Subject 15, Session 3, Block 13 Recording_FLEX2_213075_2025.04.11T16.25.54.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_15/Subject 15, Session 3, Block 15 Recording_FLEX2_213075_2025.04.11T16.36.57.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_16/Subject 15, Session 3, Block 16 Recording_FLEX2_213075_2025.04.11T16.43.25.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_17/Subject 15, Session 3, Block 17 Recording_FLEX2_213075_2025.04.11T16.48.52.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_18/Subject 15, Session 3, Block 18 Recording_FLEX2_213075_2025.04.11T16.54.20.07.00.md.edf
+raw ready raw_eeg/sub-15/session_01/block_19/Subject 15, Session 1, Block 19 Recording_FLEX2_213075_2025.04.05T12.43.01.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_02/Subject 15, Session 4, Block 2 Recording_FLEX2_213075_2025.04.14T15.43.26.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_03/Subject 15, Session 4, Block 3 Recording_FLEX2_213075_2025.04.14T15.48.19.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_04/Subject 15, Session 4, Block 4 Recording_FLEX2_213075_2025.04.14T15.53.13.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_05/Subject 15, Session 4, Block 5 Recording_FLEX2_213075_2025.04.14T15.58.03.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_06/Subject 15, Session 4, Block 6 Recording_FLEX2_213075_2025.04.14T16.03.40.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_07/Subject 15, Session 4, Block 7 Recording_FLEX2_213075_2025.04.14T16.09.02.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_08/Subject 15, Session 4, Block 8 Recording_FLEX2_213075_2025.04.14T16.14.19.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_09/Subject 15, Session 4, Block 9 Recording_FLEX2_213075_2025.04.14T16.19.47.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_10/Subject 15, Session 4, Block 10 Recording_FLEX2_213075_2025.04.14T16.25.05.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_11/Subject 15, Session 4, Block 11 Recording_FLEX2_213075_2025.04.14T16.30.26.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_12/Subject 15, Session 4, Block 12 Recording_FLEX2_213075_2025.04.14T16.35.45.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_13/Subject 15, Session 4, Block 13 Recording_FLEX2_213075_2025.04.14T16.41.15.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_14/Subject 15, Session 4, Block 14 Recording_FLEX2_213075_2025.04.14T16.46.35.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_15/Subject 15, Session 4, Block 15 Recording_FLEX2_213075_2025.04.14T16.52.14.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_16/Subject 15, Session 4, Block 16 Recording_FLEX2_213075_2025.04.14T16.57.41.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_17/Subject 15, Session 4, Block 17 Recording_FLEX2_213075_2025.04.14T17.03.05.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_18/Subject 15, Session 4, Block 18 Recording_FLEX2_213075_2025.04.14T17.08.29.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_19/Subject 15, Session 4, Block 19 Recording_FLEX2_213075_2025.04.14T17.13.51.07.00.md.edf
+raw ready raw_eeg/sub-15/session_04/block_01/Subject 15, Session 4, Block 1 Recording_FLEX2_213075_2025.04.14T15.38.32.07.00.md.edf
+raw ready raw_eeg/sub-15/session_02/block_19/Subject 15, Session 2, Block 19 Recording_FLEX2_213075_2025.04.10T17.05.56.07.00.md.edf
+raw ready raw_eeg/sub-15/session_03/block_19/Subject 15, Session 3, Block 19 Recording_FLEX2_213075_2025.04.11T16.59.50.07.00.md.edf
+sub-15 ses-01_block-01 verified 1014
+sub-15 ses-01_block-02 verified 1014
+sub-15 ses-01_block-03 verified 1014
+sub-15 ses-01_block-04 verified 1014
+sub-15 ses-01_block-05 verified 1114
+sub-15 ses-01_block-06 verified 1114
+sub-15 ses-01_block-07 verified 1114
+sub-15 ses-01_block-08 verified 1114
+sub-15 ses-01_block-09 verified 1114
+sub-15 ses-01_block-10 verified 1114
+sub-15 ses-01_block-11 verified 1114
+sub-15 ses-01_block-12 verified 1114
+sub-15 ses-01_block-13 verified 1114
+sub-15 ses-01_block-14 verified 1114
+sub-15 ses-01_block-15 verified 1114
+sub-15 ses-01_block-16 verified 1114
+sub-15 ses-01_block-17 verified 1114
+sub-15 ses-01_block-18 verified 1114
+sub-15 ses-01_block-19 verified 1114
+sub-15 ses-02_block-01 verified 1014
+sub-15 ses-02_block-02 verified 1014
+sub-15 ses-02_block-03 verified 1014
+sub-15 ses-02_block-04 verified 1014
+sub-15 ses-02_block-05 verified 1114
+sub-15 ses-02_block-06 verified 1114
+sub-15 ses-02_block-07 verified 1114
+sub-15 ses-02_block-08 verified 1114
+sub-15 ses-02_block-09 verified 1114
+sub-15 ses-02_block-10 verified 1114
+sub-15 ses-02_block-11 verified 1114
+sub-15 ses-02_block-12 verified 1114
+sub-15 ses-02_block-13 verified 1114
+sub-15 ses-02_block-14 verified 1114
+sub-15 ses-02_block-15 verified 1114
+sub-15 ses-02_block-16 verified 1114
+sub-15 ses-02_block-17 verified 1113
+sub-15 ses-02_block-18 verified 1114
+sub-15 ses-02_block-19 verified 1114
+sub-15 ses-03_block-01 verified 1014
+sub-15 ses-03_block-02 verified 1014
+sub-15 ses-03_block-03 verified 1014
+sub-15 ses-03_block-04 verified 1014
+sub-15 ses-03_block-05 verified 1114
+sub-15 ses-03_block-06 verified 1114
+sub-15 ses-03_block-07 verified 1114
+sub-15 ses-03_block-08 verified 1114
+sub-15 ses-03_block-09 verified 1114
+sub-15 ses-03_block-10 verified 1114
+sub-15 ses-03_block-11 verified 1114
+sub-15 ses-03_block-12 verified 1114
+sub-15 ses-03_block-13 verified 1114
+sub-15 ses-03_block-14 verified 1114
+sub-15 ses-03_block-15 verified 1114
+sub-15 ses-03_block-16 verified 1114
+sub-15 ses-03_block-17 verified 1114
+sub-15 ses-03_block-18 verified 1114
+sub-15 ses-03_block-19 verified 1114
+sub-15 ses-04_block-01 verified 1014
+sub-15 ses-04_block-02 verified 1014
+sub-15 ses-04_block-03 verified 1014
+sub-15 ses-04_block-04 verified 1014
+sub-15 ses-04_block-05 verified 1114
+sub-15 ses-04_block-06 verified 1114
+sub-15 ses-04_block-07 verified 1114
+sub-15 ses-04_block-08 verified 1114
+sub-15 ses-04_block-09 verified 1114
+sub-15 ses-04_block-10 verified 1114
+sub-15 ses-04_block-11 verified 1114
+sub-15 ses-04_block-12 verified 1114
+sub-15 ses-04_block-13 verified 1114
+sub-15 ses-04_block-14 verified 1114
+sub-15 ses-04_block-15 verified 1114
+sub-15 ses-04_block-16 verified 1114
+sub-15 ses-04_block-17 verified 1114
+sub-15 ses-04_block-18 verified 1114
+sub-15 ses-04_block-19 verified 1114

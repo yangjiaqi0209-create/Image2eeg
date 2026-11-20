@@ -1,0 +1,27 @@
+{
+  "rule": "Train for the full 50-epoch budget. Keep the checkpoint with the highest validation top-1 (ModelCheckpoint mode=max, save_top_k=1). EarlyStopping patience is 50, so it does not stop training before the budget. The test split is not opened and is not a selection metric.",
+  "checkpoint": "results/things_eeg2_leakfree/checkpoints/encoder/THINGSEEG2_leakfree/sub-09_seed0/checkpoints/epoch=11-step=192.ckpt",
+  "epoch": 11,
+  "global_step": 192,
+  "callbacks": {
+    "EarlyStopping{'monitor': 'val_top1_acc', 'mode': 'max'}": {
+      "wait_count": 0,
+      "stopped_epoch": 0,
+      "best_score": 0.09189189225435257,
+      "patience": 50
+    },
+    "ModelCheckpoint{'monitor': 'val_top1_acc', 'mode': 'max', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}": {
+      "monitor": "val_top1_acc",
+      "best_model_score": 0.09189189225435257,
+      "best_model_path": "results/things_eeg2_leakfree/checkpoints/encoder/THINGSEEG2_leakfree/sub-09_seed0/checkpoints/epoch=11-step=192.ckpt",
+      "current_score": 0.09189189225435257,
+      "dirpath": "results/things_eeg2_leakfree/checkpoints/encoder/THINGSEEG2_leakfree/sub-09_seed0/checkpoints",
+      "best_k_models": {
+        "results/things_eeg2_leakfree/checkpoints/encoder/THINGSEEG2_leakfree/sub-09_seed0/checkpoints/epoch=11-step=192.ckpt": 0.09189189225435257
+      },
+      "kth_best_model_path": "results/things_eeg2_leakfree/checkpoints/encoder/THINGSEEG2_leakfree/sub-09_seed0/checkpoints/epoch=11-step=192.ckpt",
+      "kth_value": 0.09189189225435257,
+      "last_model_path": "results/things_eeg2_leakfree/checkpoints/encoder/THINGSEEG2_leakfree/sub-09_seed0/checkpoints/last.ckpt"
+    }
+  }
+}

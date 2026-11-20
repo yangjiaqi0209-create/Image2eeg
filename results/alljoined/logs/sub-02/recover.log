@@ -1,0 +1,2 @@
+
+{"start": 1794297058.8246024, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", "--subject", "2"]}

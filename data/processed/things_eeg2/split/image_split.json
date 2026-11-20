@@ -1,0 +1,10 @@
+{
+  "seed": 2023,
+  "rule": "np.random.default_rng(2023).permutation(16540); val=prefix 740; train=the other 15800",
+  "n_train": 15800,
+  "n_val": 740,
+  "n_test": 200,
+  "pairwise_disjoint": true,
+  "shared_by": "encoder and generator",
+  "test_source": "official THINGS-EEG2 test.pt order, not carved from train"
+}

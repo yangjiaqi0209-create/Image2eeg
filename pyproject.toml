@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "image2eeg"
+version = "0.1.0"
+description = "Leak-free image-to-EEG revision pipeline"
+requires-python = ">=3.10"
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["project_paths"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["encoder*", "predictor*", "preprocess*"]
+namespaces = true
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

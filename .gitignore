@@ -1,132 +1,108 @@
-# =============================================================================
-# UBP EEG repo — what may be uploaded
-#   LICENSE, README.md, requirements.txt, COMMIT_CHECKLIST.md, .gitignore
-#   configs/  encoder/  predictor/  preprocess/  scripts/
-#   data/registry.yaml  data/profiles/  data/env.example  data/README.md
-#
-# Everything else below is local-only (datasets, weights, analysis, manuscript).
-# =============================================================================
+# Upload the THINGS-EEG2 and Alljoined reproduction code, the shared image
+# split, training logs, and selection records. Model weights are not stored
+# in git; publish the official .ckpt and .pt files as a GitHub Release.
+# Everything else stays local.
 
-# --- Entire trees never uploaded ---
-analysis/
-manuscript/
-checkpoints/
-pretrained/
-results/
+# Ignore all files. Every directory stays visible so the exceptions below work.
+*
+!/**/
 
-# --- Datasets (keep only small registry/profile templates under data/) ---
-data/things-eeg/
-data/things-meg/
-data/**/Preprocessed*/
-data/**/Image_set*/
-data/**/Image_feature*/
-data/**/ubp_preprocessed/
-data/**/official_fif/
-data/**/raw*/
-data/**/numba_cache/
-data/env.local
+# --- Repository root. A leading slash keeps these names from matching copies elsewhere. ---
+!/.gitignore
+!/LICENSE
+!/NOTICE
+!/README.md
+!/requirements.txt
+!/pyproject.toml
 
-# Extra safety: binary / neuroimaging / media payloads anywhere
-*.fif
-*.edf
-*.bdf
-*.vhdr
-*.vmrk
-*.eeg
-*.mat
-*.h5
-*.hdf5
-*.parquet
-*.arrow
-*.csv.gz
-*.tar
-*.tar.gz
-*.tgz
-*.zip
-*.7z
-*.rar
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.webp
-*.bmp
-*.tif
-*.tiff
-*.mp4
-*.avi
-*.wav
-*.nii
-*.nii.gz
+# --- Model and preprocessing source ---
+!src/**
+src/**/*.md
 
-# --- Model weights / tensors / checkpoints ---
-*.pth
-*.pt
-*.ckpt
-*.safetensors
-*.bin
-*.pkl
-*.pickle
-*.npy
-*.npz
-*.onnx
-*.params
-*.weights
-*.joblib
+# --- Configs used by the two official models ---
+!configs/eeg/fixed_fovea_leakfree.yaml
+!configs/alljoined/encoder.yaml
+!configs/alljoined/encoder_final.yaml
+!configs/alljoined/source_hashes.json
+!configs/things_eeg2/generator_stage1_reference.json
+!configs/things_eeg2/generator_stage2_reference.json
 
-# --- Secrets / machine-local env ---
-.env
-.env.*
-!.env.example
-data/env.local
+# --- Dataset registry and the shared 15,800/740/200 image split ---
+!data/env.example
+!data/registry.yaml
+!data/profiles/things_eeg.yaml
+!data/profiles/alljoined_eeg.yaml
+!data/processed/things_eeg2/split/image_split.npz
+!data/processed/things_eeg2/split/image_split.json
 
-# --- Python ---
+# --- THINGS reproduction entry ---
+!experiments/leakfree_things/__init__.py
+!experiments/leakfree_things/prepare_subject.py
+!experiments/leakfree_things/evaluate.py
+!experiments/leakfree_things/run_subject.sh
+
+# Imported by THINGS preprocessing. The rest of this package stays local.
+!experiments/cross_subject_eeg/__init__.py
+!experiments/cross_subject_eeg/recover_preprocessing.py
+!experiments/cross_subject_eeg/run.py
+
+# --- Alljoined reproduction entry. Figure summarizers stay local. ---
+!experiments/alljoined/*.py
+!experiments/alljoined/*.sh
+experiments/alljoined/summarize.py
+experiments/alljoined/summarize_layout_fixed_v1.py
+
+# Channel list and metrics imported by the two evaluation entries.
+!figures/eeg_gen_eval/__init__.py
+!figures/eeg_gen_eval/config.py
+!figures/eeg_gen_eval/compute/__init__.py
+!figures/eeg_gen_eval/compute/metrics.py
+
+# --- Runners ---
+!scripts/_env.sh
+!scripts/python.sh
+!scripts/train_things.sh
+!scripts/validate_revision.py
+
+# Config and TensorBoard log saved beside each official run. The .ckpt and
+# .pt weights themselves stay out of git and go to a GitHub Release.
+!checkpoints/things_eeg2/encoder/THINGSEEG2_leakfree/**/fixed_fovea_leakfree.yaml
+!checkpoints/things_eeg2/encoder/THINGSEEG2_leakfree/**/hparams.yaml
+!checkpoints/things_eeg2/encoder/THINGSEEG2_leakfree/**/events.out.tfevents*
+
+!checkpoints/alljoined/encoder/Alljoined_things_matched_buffered/**/encoder.yaml
+!checkpoints/alljoined/encoder/Alljoined_things_matched_buffered/**/hparams.yaml
+!checkpoints/alljoined/encoder/Alljoined_things_matched_buffered/**/events.out.tfevents*
+
+# --- Selection records and training logs ---
+!results/things_eeg2_leakfree/selection/*.json
+!results/things_eeg2_leakfree/generator/**/log.txt
+!results/alljoined/selection/*.json
+!results/alljoined/generator/**/log.txt
+!results/alljoined/logs/**/*.log
+
+# --- Never upload, even inside a directory listed above ---
 __pycache__/
 **/__pycache__/
 *.py[cod]
 *$py.class
-*.egg-info/
-.eggs/
-dist/
-build/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-.tox/
-.venv/
-venv/
-env/
-
-# --- Notebooks / IDE / OS ---
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
 .vscode/
 .idea/
 .cursor/
+.claude/
+.codex/
+.agents/
 .DS_Store
 Thumbs.db
 *.swp
 *.swo
-
-# --- Training / tool caches ---
-**/lightning_logs/
+.env
+.env.*
+!.env.example
+data/env.local
 numba_cache/
 **/numba_cache/
 wandb/
-runs/
 mlruns/
-/tmp/
-
-# --- LaTeX build (if manuscript/ is ever force-added) ---
-*.aux
-*.log
-*.out
-*.toc
-*.synctex.gz
-*.fdb_latexmk
-*.fls
-*.bbl
-*.blg
-*.pdf

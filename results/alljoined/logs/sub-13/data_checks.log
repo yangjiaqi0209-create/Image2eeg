@@ -1,0 +1,26 @@
+
+{"start": 1794548950.140301, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/check_data.py", "--subject", "13"]}
+{
+  "train": {
+    "images": 15629,
+    "retained_trials": 43026,
+    "formal_order_matches": true,
+    "no_zero_padding": true
+  },
+  "val": {
+    "images": 740,
+    "retained_trials": 2989,
+    "formal_order_matches": true,
+    "no_zero_padding": true
+  },
+  "test": {
+    "images": 200,
+    "retained_trials": 16224,
+    "formal_order_matches": true,
+    "no_zero_padding": true
+  },
+  "passed": true,
+  "canonical_stimulus_mapping_verified": true,
+  "training_only_mvnn_verified": true,
+  "trial_indices_sha256": "d94ca8176601a477532727b4e1a69979971a9631e095df1bcf82150321a2e877"
+}

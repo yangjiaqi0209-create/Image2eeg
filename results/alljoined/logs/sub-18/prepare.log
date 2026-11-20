@@ -1,0 +1,7 @@
+
+{"start": 1794627415.4831073, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/prepare.py", "--subject", "18"]}
+sub-18 train-only MVNN 1 trials 11072
+sub-18 train-only MVNN 2 trials 10658
+sub-18 train-only MVNN 3 trials 10878
+sub-18 train-only MVNN 4 trials 10610
+sub-18 DATA PASSED {'train': {'images': 15630, 'trials': 43218, 'concepts': 1654, 'min_repeats': 1, 'max_repeats': 5}, 'val': {'images': 740, 'trials': 2999, 'concepts': 624, 'min_repeats': 4, 'max_repeats': 6}, 'test': {'images': 200, 'trials': 16224, 'concepts': 200, 'min_repeats': 80, 'max_repeats': 84}}

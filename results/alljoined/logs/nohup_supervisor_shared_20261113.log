@@ -1,0 +1,74 @@
+SHARED GPU scheduling handoff {"time": 1794548849.9828494, "reason": "Explicit user request to allow simultaneous Alljoined and Major10 GPU work", "old_supervisor_pid": 76857, "replaced_waiting_controller": 194485, "adopt_controllers": {"13": 200020}, "preserved_data_processes": [266328], "Major10_queues_preserved": [188857, 188858], "minimum_free_MiB": 8192, "no_model_or_optimizer_or_selection_rule_changes": true, "new_supervisor_pid": 266486, "log": "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/logs/nohup_supervisor_shared_20261113.log", "after_launch": 1794548850.185717}
+RESUME; verified completed subjects [1, 2, 3, 4, 5]
+REUSE existing verified final test sub-01
+REUSE existing verified final test sub-02
+REUSE existing verified final test sub-04
+REUSE existing verified final test sub-03
+REUSE existing verified final test sub-05
+REUSE existing selected encoder/stage1/stage2, no retraining sub-07
+REUSE existing selected encoder/stage1/stage2, no retraining sub-06
+DATA BLOCK remains sub-08 official dropped disagreements; no threshold relaxed
+REUSE existing selected encoder/stage1/stage2, no retraining sub-09
+REUSE existing selected encoder/stage1/stage2, no retraining sub-10
+REUSE existing selected encoder/stage1/stage2, no retraining sub-11
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 19442 CUDA owners [188857, 262484]
+START sub-12 physical GPU 0
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+ADOPT waiting for existing data recovery/preparation sub-13 controller 200020 children [266328]
+REPLACED idle controller sub-13 200020
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18678 CUDA owners [188858, 265868]
+START sub-13 physical GPU 1
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18676 CUDA owners [188858, 265868]
+START sub-15 physical GPU 1
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 316520]
+START sub-14 physical GPU 0
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 19442 CUDA owners [188857, 346015]
+START sub-16 physical GPU 0
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18676 CUDA owners [188858, 348919]
+START sub-17 physical GPU 1
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 19442 CUDA owners [188857, 389882]
+START sub-18 physical GPU 0
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18678 CUDA owners [188858, 395133]
+START sub-19 physical GPU 1
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 19442 CUDA owners [188857, 503109]
+START sub-20 physical GPU 0
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18638 CUDA owners [188858, 540514]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 537734]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 537734]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18638 CUDA owners [188858, 540514]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 537734]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18638 CUDA owners [188858, 540514]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 537734]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18638 CUDA owners [188858, 540514]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 537734]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18638 CUDA owners [188858, 540514]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 537734]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18638 CUDA owners [188858, 540514]
+Physical GPU 0 admitted: authorized_Major10_sharing free MiB 21018 CUDA owners [188857, 537734]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18638 CUDA owners [188858, 540514]
+Traceback (most recent call last):
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/summarize.py", line 105, in <module>
+    if __name__=='__main__':main()
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/summarize.py", line 41, in main
+    plot(table,dest)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/summarize.py", line 86, in plot
+    require_matplotlib_panel_alignment(fig,axes=list(axes.flat),json_out=figures/'S_fig4_panel_alignment.json')
+  File "/home/plus7/.codex/skills/nature-figure/scripts/audit_panel_alignment.py", line 842, in require_matplotlib_panel_alignment
+    raise PanelAlignmentError(render_text(report, strict=strict))
+audit_panel_alignment.PanelAlignmentError: Panel alignment: FIX BEFORE DELIVERY
+  comparisons: 9
+  fail: 3
+  warn: 0
+  exemptions: 0
+  FAIL horizontal-gutter-misalignment [inferred-row-1]: Comparable inter-panel gutters are not uniform (a, b, c)
+  FAIL horizontal-gutter-misalignment [inferred-row-2]: Comparable inter-panel gutters are not uniform (d, e, f)
+  FAIL horizontal-gutter-misalignment [inferred-row-3]: Comparable inter-panel gutters are not uniform (g, h, i)
+QUEUE FINISHED; metrics 20 /20; no low-performance subjects excluded

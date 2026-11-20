@@ -1,0 +1,351 @@
+
+{"start": 1794313604.2450428, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", "--subject", "19"]}
+Traceback (most recent call last):
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connection.py", line 239, in _new_conn
+    sock = connection.create_connection(
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connectionpool.py", line 779, in urlopen
+    self._prepare_proxy(conn)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connectionpool.py", line 1074, in _prepare_proxy
+    conn.connect()
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connection.py", line 827, in connect
+    self.sock = sock = self._new_conn()
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connection.py", line 254, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+urllib3.exceptions.ProxyError: ('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused"))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/urllib3/util/retry.py", line 555, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/Alljoined/Alljoined-1.6M/resolve/2596eb5cc116a4d2254370f96549752b5ac8747b/preprocessed_eeg/sub-19/stim_order.parquet (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused")))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", line 84, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--subject',type=int,required=True);main(p.parse_args().subject)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", line 23, in main
+    remote.fetch(f'{remote.HF}/datasets/{remote.REPO}/resolve/{revision}/{rel}',dest/'official'/rel)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/recover_sub01_sources.py", line 56, in fetch
+    with requests.get(url, timeout=(30, 120), stream=True) as r:
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/api.py", line 87, in get
+    return request("get", url, params=params, **kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/api.py", line 71, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/plus7/miniconda3/envs/EEG/lib/python3.10/site-packages/requests/adapters.py", line 723, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/Alljoined/Alljoined-1.6M/resolve/2596eb5cc116a4d2254370f96549752b5ac8747b/preprocessed_eeg/sub-19/stim_order.parquet (Caused by ProxyError('Unable to connect to proxy', NewConnectionError("HTTPSConnection(host='127.0.0.1', port=17890): Failed to establish a new connection: [Errno 111] Connection refused")))
+
+{"start": 1794588161.948295, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", "--subject", "19"]}
+NETWORK WAIT: ProxyError; retry 1 in 15s; subject remains included
+NETWORK WAIT: ProxyError; retry 2 in 30s; subject remains included
+NETWORK WAIT: ProxyError; retry 3 in 45s; subject remains included
+NETWORK WAIT: ProxyError; retry 4 in 60s; subject remains included
+NETWORK WAIT: ProxyError; retry 5 in 75s; subject remains included
+NETWORK WAIT: ProxyError; retry 6 in 90s; subject remains included
+NETWORK WAIT: ProxyError; retry 7 in 105s; subject remains included
+NETWORK WAIT: ProxyError; retry 8 in 120s; subject remains included
+NETWORK WAIT: ProxyError; retry 9 in 135s; subject remains included
+NETWORK WAIT: ProxyError; retry 10 in 150s; subject remains included
+NETWORK WAIT: ProxyError; retry 11 in 165s; subject remains included
+NETWORK WAIT: ProxyError; retry 12 in 180s; subject remains included
+NETWORK WAIT: ProxyError; retry 13 in 195s; subject remains included
+NETWORK WAIT: ProxyError; retry 14 in 210s; subject remains included
+NETWORK WAIT: ProxyError; retry 15 in 225s; subject remains included
+NETWORK WAIT: ProxyError; retry 16 in 240s; subject remains included
+NETWORK WAIT: ProxyError; retry 17 in 255s; subject remains included
+NETWORK WAIT: ProxyError; retry 18 in 270s; subject remains included
+NETWORK WAIT: ProxyError; retry 19 in 285s; subject remains included
+NETWORK WAIT: ProxyError; retry 20 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 21 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 22 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 23 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 24 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 25 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 26 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 27 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 28 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 29 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 30 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 31 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 32 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 33 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 34 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 35 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 36 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 37 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 38 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 39 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 40 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 41 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 42 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 43 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 44 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 45 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 46 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 47 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 48 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 49 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 50 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 51 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 52 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 53 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 54 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 55 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 56 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 57 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 58 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 59 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 60 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 61 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 62 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 63 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 64 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 65 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 66 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 67 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 68 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 69 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 70 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 71 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 72 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 73 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 74 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 75 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 76 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 77 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 78 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 79 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 80 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 81 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 82 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 83 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 84 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 85 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 86 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 87 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 88 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 89 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 90 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 91 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 92 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 93 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 94 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 95 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 96 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 97 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 98 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 99 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 100 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 101 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 102 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 103 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 104 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 105 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 106 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 107 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 108 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 109 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 110 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 111 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 112 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 113 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 114 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 115 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 116 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 117 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 118 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 119 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 120 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 121 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 122 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 123 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 124 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 125 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 126 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 127 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 128 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 129 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 130 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 131 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 132 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 133 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 134 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 135 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 136 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 137 in 300s; subject remains included
+NETWORK WAIT: ProxyError; retry 138 in 300s; subject remains included
+raw ready raw_eeg/sub-19/session_01/block_03/Subject 19, Session 1, Block 3 Recording_FLEX2_213075_2025.02.04T10.22.34.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_01/Subject 19, Session 1, Block 1 Recording_FLEX2_213075_2025.02.04T10.12.20.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_02/Subject 19, Session 1, Block 2 Recording_FLEX2_213075_2025.02.04T10.17.24.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_04/Subject 19, Session 1, Block 4 Recording_FLEX2_213075_2025.02.04T10.27.38.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_05/Subject 19, Session 1, Block 5 Recording_FLEX2_213075_2025.02.04T10.32.48.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_06/Subject 19, Session 1, Block 6 Recording_FLEX2_213075_2025.02.04T10.38.33.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_07/Subject 19, Session 1, Block 7 Recording_FLEX2_213075_2025.02.04T10.44.02.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_08/Subject 19, Session 1, Block 8 Recording_FLEX2_213075_2025.02.04T10.49.29.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_09/Subject 19, Session 1, Block 9 Recording_FLEX2_213075_2025.02.04T10.54.49.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_10/Subject 19, Session 1, Block 10 Recording_FLEX2_213075_2025.02.04T11.00.11.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_11/Subject 19, Session 1, Block 11 Recording_FLEX2_213075_2025.02.04T11.05.39.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_12/Subject 19, Session 1, Block 12 Recording_FLEX2_213075_2025.02.04T11.11.02.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_13/Subject 19, Session 1, Block 13 Recording_FLEX2_213075_2025.02.04T11.16.28.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_14/Subject 19, Session 1, Block 14 Recording_FLEX2_213075_2025.02.04T11.21.55.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_15/Subject 19, Session 1, Block 15 Recording_FLEX2_213075_2025.02.04T11.27.17.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_16/Subject 19, Session 1, Block 16 Recording_FLEX2_213075_2025.02.04T11.32.37.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_17/Subject 19, Session 1, Block 17 Recording_FLEX2_213075_2025.02.04T11.37.58.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_18/Subject 19, Session 1, Block 18 Recording_FLEX2_213075_2025.02.04T11.43.27.08.00.md.edf
+raw ready raw_eeg/sub-19/session_01/block_19/Subject 19, Session 1, Block 19 Recording_FLEX2_213075_2025.02.04T11.48.47.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_01/Subject 19, Session 2, Block 1 Recording_FLEX2_213075_2025.02.05T14.49.30.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_02/Subject 19, Session 2, Block 2 Recording_FLEX2_213075_2025.02.05T14.54.31.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_04/Subject 19, Session 2, Block 4 Recording_FLEX2_213075_2025.02.05T15.04.19.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_03/Subject 19, Session 2, Block 3 Recording_FLEX2_213075_2025.02.05T14.59.29.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_05/Subject 19, Session 2, Block 5 Recording_FLEX2_213075_2025.02.05T15.09.12.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_07/Subject 19, Session 2, Block 7 Recording_FLEX2_213075_2025.02.05T15.20.30.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_08/Subject 19, Session 2, Block 8 Recording_FLEX2_213075_2025.02.05T15.26.04.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_06/Subject 19, Session 2, Block 6 Recording_FLEX2_213075_2025.02.05T15.14.48.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_09/Subject 19, Session 2, Block 9 Recording_FLEX2_213075_2025.02.05T15.31.24.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_11/Subject 19, Session 2, Block 11 Recording_FLEX2_213075_2025.02.05T15.42.57.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_12/Subject 19, Session 2, Block 12 Recording_FLEX2_213075_2025.02.05T15.48.24.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_10/Subject 19, Session 2, Block 10 Recording_FLEX2_213075_2025.02.05T15.36.42.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_13/Subject 19, Session 2, Block 13 Recording_FLEX2_213075_2025.02.05T15.53.48.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_14/Subject 19, Session 2, Block 14 Recording_FLEX2_213075_2025.02.05T15.59.15.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_15/Subject 19, Session 2, Block 15 Recording_FLEX2_213075_2025.02.05T16.04.47.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_16/Subject 19, Session 2, Block 16 Recording_FLEX2_213075_2025.02.05T16.10.09.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_17/Subject 19, Session 2, Block 17 Recording_FLEX2_213075_2025.02.05T16.15.35.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_01/Subject 19, Session 3, Block 1 Recording_FLEX2_213075_2025.02.11T15.29.18.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_02/Subject 19, Session 3, Block 2 Recording_FLEX2_213075_2025.02.11T15.34.11.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_19/Subject 19, Session 2, Block 19 Recording_FLEX2_213075_2025.02.05T16.26.25.08.00.md.edf
+raw ready raw_eeg/sub-19/session_02/block_18/Subject 19, Session 2, Block 18 Recording_FLEX2_213075_2025.02.05T16.21.01.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_03/Subject 19, Session 3, Block 3 Recording_FLEX2_213075_2025.02.11T15.39.14.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_04/Subject 19, Session 3, Block 4 Recording_FLEX2_213075_2025.02.11T15.44.24.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_06/Subject 19, Session 3, Block 6 Recording_FLEX2_213075_2025.02.11T15.55.54.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_05/Subject 19, Session 3, Block 5 Recording_FLEX2_213075_2025.02.11T15.49.41.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_07/Subject 19, Session 3, Block 7 Recording_FLEX2_213075_2025.02.11T16.01.09.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_08/Subject 19, Session 3, Block 8 Recording_FLEX2_213075_2025.02.11T16.06.33.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_09/Subject 19, Session 3, Block 9 Recording_FLEX2_213075_2025.02.11T16.12.22.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_10/Subject 19, Session 3, Block 10 Recording_FLEX2_213075_2025.02.11T16.17.37.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_11/Subject 19, Session 3, Block 11 Recording_FLEX2_213075_2025.02.11T16.23.47.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_12/Subject 19, Session 3, Block 12 Recording_FLEX2_213075_2025.02.11T16.29.18.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_14/Subject 19, Session 3, Block 14 Recording_FLEX2_213075_2025.02.11T16.39.46.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_13/Subject 19, Session 3, Block 13 Recording_FLEX2_213075_2025.02.11T16.34.34.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_15/Subject 19, Session 3, Block 15 Recording_FLEX2_213075_2025.02.11T16.45.07.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_16/Subject 19, Session 3, Block 16 Recording_FLEX2_213075_2025.02.11T16.50.18.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_18/Subject 19, Session 3, Block 18 Recording_FLEX2_213075_2025.02.11T17.00.44.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_17/Subject 19, Session 3, Block 17 Recording_FLEX2_213075_2025.02.11T16.55.28.08.00.md.edf
+raw ready raw_eeg/sub-19/session_03/block_19/Subject 19, Session 3, Block 19 Recording_FLEX2_213075_2025.02.11T17.07.06.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_01/Subject 19, Session 4, Block 1 Recording_FLEX2_213075_2025.02.13T12.46.07.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_03/Subject 19, Session 4, Block 3 Recording_FLEX2_213075_2025.02.13T12.57.47.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_02/Subject 19, Session 4, Block 2 Recording_FLEX2_213075_2025.02.13T12.51.57.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_04/Subject 19, Session 4, Block 4 Recording_FLEX2_213075_2025.02.13T13.03.08.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_05/Subject 19, Session 4, Block 5 Recording_FLEX2_213075_2025.02.13T13.08.55.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_07/Subject 19, Session 4, Block 7 Recording_FLEX2_213075_2025.02.13T13.19.28.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_08/Subject 19, Session 4, Block 8 Recording_FLEX2_213075_2025.02.13T13.25.07.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_06/Subject 19, Session 4, Block 6 Recording_FLEX2_213075_2025.02.13T13.14.12.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_10/Subject 19, Session 4, Block 10 Recording_FLEX2_213075_2025.02.13T13.36.25.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_11/Subject 19, Session 4, Block 11 Recording_FLEX2_213075_2025.02.13T13.42.26.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_09/Subject 19, Session 4, Block 9 Recording_FLEX2_213075_2025.02.13T13.30.59.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_12/Subject 19, Session 4, Block 12 Recording_FLEX2_213075_2025.02.13T13.47.41.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_13/Subject 19, Session 4, Block 13 Recording_FLEX2_213075_2025.02.13T13.53.04.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_14/Subject 19, Session 4, Block 14 Recording_FLEX2_213075_2025.02.13T13.58.24.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_15/Subject 19, Session 4, Block 15 Recording_FLEX2_213075_2025.02.13T14.04.04.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_16/Subject 19, Session 4, Block 16 Recording_FLEX2_213075_2025.02.13T14.09.19.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_19/Subject 19, Session 4, Block 19 Recording_FLEX2_213075_2025.02.13T14.25.10.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_17/Subject 19, Session 4, Block 17 Recording_FLEX2_213075_2025.02.13T14.14.37.08.00.md.edf
+raw ready raw_eeg/sub-19/session_04/block_18/Subject 19, Session 4, Block 18 Recording_FLEX2_213075_2025.02.13T14.19.51.08.00.md.edf
+sub-19 ses-01_block-01 verified 1008
+sub-19 ses-01_block-02 verified 1008
+sub-19 ses-01_block-03 verified 1008
+sub-19 ses-01_block-04 verified 1008
+sub-19 ses-01_block-05 verified 1108
+sub-19 ses-01_block-06 verified 1108
+sub-19 ses-01_block-07 verified 1108
+sub-19 ses-01_block-08 verified 1108
+sub-19 ses-01_block-09 verified 1108
+sub-19 ses-01_block-10 verified 1108
+sub-19 ses-01_block-11 verified 1108
+sub-19 ses-01_block-12 verified 1108
+sub-19 ses-01_block-13 verified 1108
+sub-19 ses-01_block-14 verified 1108
+sub-19 ses-01_block-15 verified 1108
+sub-19 ses-01_block-16 verified 1108
+sub-19 ses-01_block-17 verified 1108
+sub-19 ses-01_block-18 verified 1108
+sub-19 ses-01_block-19 verified 1108
+sub-19 ses-02_block-01 verified 1014
+sub-19 ses-02_block-02 verified 1014
+sub-19 ses-02_block-03 verified 1014
+sub-19 ses-02_block-04 verified 1013
+sub-19 ses-02_block-05 verified 1114
+sub-19 ses-02_block-06 verified 1111
+sub-19 ses-02_block-07 verified 1114
+sub-19 ses-02_block-08 verified 1114
+sub-19 ses-02_block-09 verified 1114
+sub-19 ses-02_block-10 verified 1110
+sub-19 ses-02_block-11 verified 1114
+sub-19 ses-02_block-12 verified 1113
+sub-19 ses-02_block-13 verified 1114
+sub-19 ses-02_block-14 verified 1114
+sub-19 ses-02_block-15 verified 1113
+sub-19 ses-02_block-16 verified 1114
+sub-19 ses-02_block-17 verified 1114
+sub-19 ses-02_block-18 verified 1114
+sub-19 ses-02_block-19 verified 1114
+sub-19 ses-03_block-01 verified 1014
+sub-19 ses-03_block-02 verified 1014
+sub-19 ses-03_block-03 verified 1014
+sub-19 ses-03_block-04 verified 1014
+sub-19 ses-03_block-05 verified 1114
+sub-19 ses-03_block-06 verified 1114
+sub-19 ses-03_block-07 verified 1114
+sub-19 ses-03_block-08 verified 1114
+sub-19 ses-03_block-09 verified 1114
+sub-19 ses-03_block-10 verified 1114
+sub-19 ses-03_block-11 verified 1114
+sub-19 ses-03_block-12 verified 1114
+sub-19 ses-03_block-13 verified 1114
+sub-19 ses-03_block-14 verified 1114
+sub-19 ses-03_block-15 verified 1114
+sub-19 ses-03_block-16 verified 1114
+sub-19 ses-03_block-17 verified 1114
+sub-19 ses-03_block-18 verified 1114
+sub-19 ses-03_block-19 verified 1114
+sub-19 ses-04_block-01 verified 1014
+sub-19 ses-04_block-02 verified 1014
+sub-19 ses-04_block-03 verified 1014
+sub-19 ses-04_block-04 verified 1014
+sub-19 ses-04_block-05 verified 1114
+sub-19 ses-04_block-06 verified 1114
+sub-19 ses-04_block-07 verified 1114
+sub-19 ses-04_block-08 verified 1114
+sub-19 ses-04_block-09 verified 1114
+sub-19 ses-04_block-10 verified 1114
+sub-19 ses-04_block-11 verified 1114
+sub-19 ses-04_block-12 verified 1114
+sub-19 ses-04_block-13 verified 1114
+sub-19 ses-04_block-14 verified 1114
+sub-19 ses-04_block-15 verified 1114
+sub-19 ses-04_block-16 verified 1114
+sub-19 ses-04_block-17 verified 1114
+sub-19 ses-04_block-18 verified 1114
+sub-19 ses-04_block-19 verified 1114

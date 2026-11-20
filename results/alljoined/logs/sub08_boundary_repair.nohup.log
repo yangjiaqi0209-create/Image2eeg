@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/sub08_boundary_repair.py", line 221, in <module>
+    controller()
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/sub08_boundary_repair.py", line 186, in controller
+    run(8,'recover',[PYTHON,str(Path(__file__).resolve()),'--recover'],env)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/train_subject.py", line 48, in run
+    event(subject,stage,'failed',exit_code=code,log=str(log));raise RuntimeError(f'{stage} exit {code}; {log}')
+RuntimeError: recover exit 1; /home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/logs/sub-08/recover.log
+
+MONITOR 2026-11-13T14:46:30.631017+00:00 PID385933: full76-block repair and independent data checks PASSED;40 physically incomplete epochs excluded;0 unresolved discrepancies;waiting for existing training queue slot. Earlier traceback is preserved history.
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18674 CUDA owners [188858, 493356]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18674 CUDA owners [188858, 493356]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18678 CUDA owners [188858, 529793]
+Physical GPU 1 admitted: authorized_Major10_sharing free MiB 18674 CUDA owners [188858, 529793]
+Traceback (most recent call last):
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/summarize.py", line 105, in <module>
+    if __name__=='__main__':main()
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/summarize.py", line 41, in main
+    plot(table,dest)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/summarize.py", line 86, in plot
+    require_matplotlib_panel_alignment(fig,axes=list(axes.flat),json_out=figures/'S_fig4_panel_alignment.json')
+  File "/home/plus7/.codex/skills/nature-figure/scripts/audit_panel_alignment.py", line 842, in require_matplotlib_panel_alignment
+    raise PanelAlignmentError(render_text(report, strict=strict))
+audit_panel_alignment.PanelAlignmentError: Panel alignment: FIX BEFORE DELIVERY
+  comparisons: 9
+  fail: 3
+  warn: 0
+  exemptions: 0
+  FAIL horizontal-gutter-misalignment [inferred-row-1]: Comparable inter-panel gutters are not uniform (a, b, c)
+  FAIL horizontal-gutter-misalignment [inferred-row-2]: Comparable inter-panel gutters are not uniform (d, e, f)
+  FAIL horizontal-gutter-misalignment [inferred-row-3]: Comparable inter-panel gutters are not uniform (g, h, i)

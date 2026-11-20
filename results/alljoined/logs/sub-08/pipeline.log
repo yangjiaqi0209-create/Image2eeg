@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/train_subject.py", line 101, in <module>
+    try:train(args.subject,args.gpu)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/train_subject.py", line 62, in train
+    run(subject,'recover',[PYTHON,str(ROOT/'recover.py'),'--subject',str(subject)],env)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/train_subject.py", line 48, in run
+    event(subject,stage,'failed',exit_code=code,log=str(log));raise RuntimeError(f'{stage} exit {code}; {log}')
+RuntimeError: recover exit 1; /home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/logs/sub-08/recover.log
+Traceback (most recent call last):
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/train_subject.py", line 101, in <module>
+    try:train(args.subject,args.gpu)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/train_subject.py", line 62, in train
+    run(subject,'recover',[PYTHON,str(ROOT/'recover.py'),'--subject',str(subject)],env)
+  File "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/train_subject.py", line 48, in run
+    event(subject,stage,'failed',exit_code=code,log=str(log));raise RuntimeError(f'{stage} exit {code}; {log}')
+RuntimeError: recover exit 1; /home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/logs/sub-08/recover.log

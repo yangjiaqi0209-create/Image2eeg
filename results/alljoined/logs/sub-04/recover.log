@@ -1,0 +1,154 @@
+
+{"start": 1794304549.8421516, "command": ["/home/plus7/miniconda3/envs/EEG/bin/python", "/home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/recover.py", "--subject", "4"]}
+raw ready raw_eeg/sub-04/session_01/block_02/Subject 4, Session 1, Block 2 Recording_FLEX2_213075_2025.02.10T14.27.01.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_01/Subject 4, Session 1, Block 1 Recording_FLEX2_213075_2025.02.10T14.20.57.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_03/Subject 4, Session 1, Block 3 Recording_FLEX2_213075_2025.02.10T14.35.10.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_04/Subject 4, Session 1, Block 4 Recording_FLEX2_213075_2025.02.10T14.43.47.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_08/Subject 4, Session 1, Block 8 Recording_FLEX2_213075_2025.02.10T15.11.22.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_05/Subject 4, Session 1, Block 5 Recording_FLEX2_213075_2025.02.10T14.49.25.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_06/Subject 4, Session 1, Block 6 Recording_FLEX2_213075_2025.02.10T14.57.21.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_07/Subject 4, Session 1, Block 7 Recording_FLEX2_213075_2025.02.10T15.02.40.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_12/Subject 4, Session 1, Block 12 Recording_FLEX2_213075_2025.02.10T15.36.46.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_09/Subject 4, Session 1, Block 9 Recording_FLEX2_213075_2025.02.10T15.17.19.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_10/Subject 4, Session 1, Block 10 Recording_FLEX2_213075_2025.02.10T15.23.52.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_11/Subject 4, Session 1, Block 11 Recording_FLEX2_213075_2025.02.10T15.30.05.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_14/Subject 4, Session 1, Block 14 Recording_FLEX2_213075_2025.02.10T15.47.24.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_13/Subject 4, Session 1, Block 13 Recording_FLEX2_213075_2025.02.10T15.42.03.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_15/Subject 4, Session 1, Block 15 Recording_FLEX2_213075_2025.02.10T15.54.30.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_16/Subject 4, Session 1, Block 16 Recording_FLEX2_213075_2025.02.10T15.59.51.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_01/Subject 4, Session 2, Block 1 Recording_FLEX2_213075_2025.02.14T12.16.29.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_17/Subject 4, Session 1, Block 17 Recording_FLEX2_213075_2025.02.10T16.06.11.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_18/Subject 4, Session 1, Block 18 Recording_FLEX2_213075_2025.02.10T16.14.45.08.00.md.edf
+raw ready raw_eeg/sub-04/session_01/block_19/Subject 4, Session 1, Block 19 Recording_FLEX2_213075_2025.02.10T16.20.35.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_02/Subject 4, Session 2, Block 2 Recording_FLEX2_213075_2025.02.14T12.21.27.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_04/Subject 4, Session 2, Block 4 Recording_FLEX2_213075_2025.02.14T12.33.49.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_05/Subject 4, Session 2, Block 5 Recording_FLEX2_213075_2025.02.14T12.40.00.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_03/Subject 4, Session 2, Block 3 Recording_FLEX2_213075_2025.02.14T12.27.55.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_06/Subject 4, Session 2, Block 6 Recording_FLEX2_213075_2025.02.14T12.45.23.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_08/Subject 4, Session 2, Block 8 Recording_FLEX2_213075_2025.02.14T12.58.33.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_07/Subject 4, Session 2, Block 7 Recording_FLEX2_213075_2025.02.14T12.51.11.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_09/Subject 4, Session 2, Block 9 Recording_FLEX2_213075_2025.02.14T13.04.44.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_12/Subject 4, Session 2, Block 12 Recording_FLEX2_213075_2025.02.14T13.37.57.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_10/Subject 4, Session 2, Block 10 Recording_FLEX2_213075_2025.02.14T13.21.22.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_11/Subject 4, Session 2, Block 11 Recording_FLEX2_213075_2025.02.14T13.30.28.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_13/Subject 4, Session 2, Block 13 Recording_FLEX2_213075_2025.02.14T13.44.11.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_14/Subject 4, Session 2, Block 14 Recording_FLEX2_213075_2025.02.14T13.49.35.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_15/Subject 4, Session 2, Block 15 Recording_FLEX2_213075_2025.02.14T13.55.10.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_16/Subject 4, Session 2, Block 16 Recording_FLEX2_213075_2025.02.14T14.00.45.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_17/Subject 4, Session 2, Block 17 Recording_FLEX2_213075_2025.02.14T14.06.21.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_18/Subject 4, Session 2, Block 18 Recording_FLEX2_213075_2025.02.14T14.12.46.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_02/Subject 4, Session 3, Block 2 Recording_FLEX2_213075_2025.02.16T09.39.25.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_01/Subject 4, Session 3, Block 1 Recording_FLEX2_213075_2025.02.16T09.31.29.08.00.md.edf
+raw ready raw_eeg/sub-04/session_02/block_19/Subject 4, Session 2, Block 19 Recording_FLEX2_213075_2025.02.14T14.18.31.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_04/Subject 4, Session 3, Block 4 Recording_FLEX2_213075_2025.02.16T09.49.28.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_05/Subject 4, Session 3, Block 5 Recording_FLEX2_213075_2025.02.16T09.55.39.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_03/Subject 4, Session 3, Block 3 Recording_FLEX2_213075_2025.02.16T09.44.45.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_06/Subject 4, Session 3, Block 6 Recording_FLEX2_213075_2025.02.16T10.02.01.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_07/Subject 4, Session 3, Block 7 Recording_FLEX2_213075_2025.02.16T10.08.35.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_08/Subject 4, Session 3, Block 8 Recording_FLEX2_213075_2025.02.16T10.13.48.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_10/Subject 4, Session 3, Block 10 Recording_FLEX2_213075_2025.02.16T10.24.36.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_09/Subject 4, Session 3, Block 9 Recording_FLEX2_213075_2025.02.16T10.18.55.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_12/Subject 4, Session 3, Block 12 Recording_FLEX2_213075_2025.02.16T10.35.54.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_11/Subject 4, Session 3, Block 11 Recording_FLEX2_213075_2025.02.16T10.30.48.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_14/Subject 4, Session 3, Block 14 Recording_FLEX2_213075_2025.02.16T10.46.35.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_13/Subject 4, Session 3, Block 13 Recording_FLEX2_213075_2025.02.16T10.41.05.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_16/Subject 4, Session 3, Block 16 Recording_FLEX2_213075_2025.02.16T10.57.07.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_15/Subject 4, Session 3, Block 15 Recording_FLEX2_213075_2025.02.16T10.51.44.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_17/Subject 4, Session 3, Block 17 Recording_FLEX2_213075_2025.02.16T11.02.14.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_18/Subject 4, Session 3, Block 18 Recording_FLEX2_213075_2025.02.16T11.07.41.08.00.md.edf
+raw ready raw_eeg/sub-04/session_03/block_19/Subject 4, Session 3, Block 19 Recording_FLEX2_213075_2025.02.16T11.12.53.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_01/Subject 4, Session 4, Block 1 Recording_FLEX2_213075_2025.02.26T09.31.17.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_03/Subject 4, Session 4, Block 3 Recording_FLEX2_213075_2025.02.26T09.42.04.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_02/Subject 4, Session 4, Block 2 Recording_FLEX2_213075_2025.02.26T09.37.14.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_04/Subject 4, Session 4, Block 4 Recording_FLEX2_213075_2025.02.26T09.46.54.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_06/Subject 4, Session 4, Block 6 Recording_FLEX2_213075_2025.02.26T09.57.14.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_05/Subject 4, Session 4, Block 5 Recording_FLEX2_213075_2025.02.26T09.51.55.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_07/Subject 4, Session 4, Block 7 Recording_FLEX2_213075_2025.02.26T10.02.34.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_09/Subject 4, Session 4, Block 9 Recording_FLEX2_213075_2025.02.26T10.13.10.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_08/Subject 4, Session 4, Block 8 Recording_FLEX2_213075_2025.02.26T10.07.57.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_11/Subject 4, Session 4, Block 11 Recording_FLEX2_213075_2025.02.26T10.49.09.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_10/Subject 4, Session 4, Block 10 Recording_FLEX2_213075_2025.02.26T10.20.34.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_12/Subject 4, Session 4, Block 12 Recording_FLEX2_213075_2025.02.26T10.54.26.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_14/Subject 4, Session 4, Block 14 Recording_FLEX2_213075_2025.02.26T11.04.45.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_13/Subject 4, Session 4, Block 13 Recording_FLEX2_213075_2025.02.26T10.59.32.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_15/Subject 4, Session 4, Block 15 Recording_FLEX2_213075_2025.02.26T11.09.51.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_16/Subject 4, Session 4, Block 16 Recording_FLEX2_213075_2025.02.26T11.15.14.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_18/Subject 4, Session 4, Block 18 Recording_FLEX2_213075_2025.02.26T11.26.11.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_19/Subject 4, Session 4, Block 19 Recording_FLEX2_213075_2025.02.26T11.31.28.08.00.md.edf
+raw ready raw_eeg/sub-04/session_04/block_17/Subject 4, Session 4, Block 17 Recording_FLEX2_213075_2025.02.26T11.20.22.08.00.md.edf
+sub-04 ses-01_block-01 verified 1014
+sub-04 ses-01_block-02 verified 1014
+sub-04 ses-01_block-03 verified 1014
+sub-04 ses-01_block-04 verified 1009
+sub-04 ses-01_block-05 verified 1114
+sub-04 ses-01_block-06 verified 1114
+sub-04 ses-01_block-07 verified 1114
+sub-04 ses-01_block-08 verified 1106
+sub-04 ses-01_block-09 verified 1114
+sub-04 ses-01_block-10 verified 1114
+sub-04 ses-01_block-11 verified 1114
+sub-04 ses-01_block-12 verified 1114
+sub-04 ses-01_block-13 verified 1102
+sub-04 ses-01_block-14 verified 1114
+sub-04 ses-01_block-15 verified 1114
+sub-04 ses-01_block-16 verified 1114
+sub-04 ses-01_block-17 verified 1114
+sub-04 ses-01_block-18 verified 1114
+sub-04 ses-01_block-19 verified 1114
+sub-04 ses-02_block-01 verified 1014
+sub-04 ses-02_block-02 verified 1014
+sub-04 ses-02_block-03 verified 1014
+sub-04 ses-02_block-04 verified 1014
+sub-04 ses-02_block-05 verified 1114
+sub-04 ses-02_block-06 verified 1114
+sub-04 ses-02_block-07 verified 1114
+sub-04 ses-02_block-08 verified 1114
+sub-04 ses-02_block-09 verified 1114
+sub-04 ses-02_block-10 verified 1114
+sub-04 ses-02_block-11 verified 1114
+sub-04 ses-02_block-12 verified 1114
+sub-04 ses-02_block-13 verified 1114
+sub-04 ses-02_block-14 verified 1114
+sub-04 ses-02_block-15 verified 1114
+sub-04 ses-02_block-16 verified 1108
+sub-04 ses-02_block-17 verified 1109
+sub-04 ses-02_block-18 verified 1114
+sub-04 ses-02_block-19 verified 1114
+sub-04 ses-03_block-01 verified 1014
+sub-04 ses-03_block-02 verified 1014
+sub-04 ses-03_block-03 verified 1014
+sub-04 ses-03_block-04 verified 1014
+sub-04 ses-03_block-05 verified 1114
+sub-04 ses-03_block-06 verified 1114
+sub-04 ses-03_block-07 verified 1114
+sub-04 ses-03_block-08 verified 1114
+sub-04 ses-03_block-09 verified 1114
+sub-04 ses-03_block-10 verified 1114
+sub-04 ses-03_block-11 verified 1114
+sub-04 ses-03_block-12 verified 1114
+sub-04 ses-03_block-13 verified 1114
+sub-04 ses-03_block-14 verified 1114
+sub-04 ses-03_block-15 verified 1114
+sub-04 ses-03_block-16 verified 1114
+sub-04 ses-03_block-17 verified 1114
+sub-04 ses-03_block-18 verified 1114
+sub-04 ses-03_block-19 verified 1114
+sub-04 ses-04_block-01 verified 1014
+sub-04 ses-04_block-02 verified 1014
+sub-04 ses-04_block-03 verified 1014
+sub-04 ses-04_block-04 verified 1014
+sub-04 ses-04_block-05 verified 1114
+sub-04 ses-04_block-06 verified 1114
+sub-04 ses-04_block-07 verified 1114
+sub-04 ses-04_block-08 verified 1114
+sub-04 ses-04_block-09 verified 1114
+sub-04 ses-04_block-10 verified 1114
+sub-04 ses-04_block-11 verified 1114
+sub-04 ses-04_block-12 verified 1114
+sub-04 ses-04_block-13 verified 1114
+sub-04 ses-04_block-14 verified 1114
+sub-04 ses-04_block-15 verified 1114
+sub-04 ses-04_block-16 verified 1114
+sub-04 ses-04_block-17 verified 1114
+sub-04 ses-04_block-18 verified 1114
+sub-04 ses-04_block-19 verified 1114

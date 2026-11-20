@@ -1,0 +1,44 @@
+timesteps:
+- 0
+- 250
+blur_kernel_size: 51
+system_g: 3
+name: Alljoined_things_matched_buffered
+models:
+  brain:
+    target: encoder.models.${brain_backbone}
+    params:
+      c_num: 32
+      z_dim: ${z_dim}
+      timesteps: ${timesteps}
+data:
+  data_dir: /home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/preprocessed
+  img_feature_dir: /home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/encoder_features
+  image_root: /home/plus7/Research/EEG_v1/EEG/data/things-eeg/Image_set_Resize
+  selected_ch: None
+  model_type: ${vision_backbone}
+  train_batch_size: 1024
+  val_batch_size: 200
+  test_batch_size: 200
+  blur_type:
+    target: encoder.models.FoveaBlur
+    params:
+      h: 224
+      w: 224
+      blur_kernel_size: ${blur_kernel_size}
+      curve_type: exp
+      system_g: ${system_g}
+  train_avg: true
+  val_avg: true
+  test_avg: true
+  defer_test: true
+  timesteps: ${timesteps}
+train:
+  epoch: ${epoch}
+  optimizer: AdamW
+  lr: ${lr}
+  monitor_val: true
+  early_stop_patience: 50
+  weight_decay: 0.0001
+save_dir: /home/plus7/Research/EEG_v1/EEG/results/alljoined_leakfree_revision/matched_image_buffered_v2/checkpoints/encoder
+dataset: alljoined

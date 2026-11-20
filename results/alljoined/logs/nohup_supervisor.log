@@ -1,0 +1,448 @@
+START sub-01 physical GPU 0
+START sub-02 physical GPU 0
+START sub-03 physical GPU 1
+START sub-04 physical GPU 0
+START sub-05 physical GPU 1
+START sub-06 physical GPU 0
+FAILED sub-06 exit 1
+START sub-08 physical GPU 0
+FAILED sub-08 exit 1
+START sub-10 physical GPU 0
+FAILED sub-10 exit 1
+START sub-12 physical GPU 0
+FAILED sub-12 exit 1
+START sub-14 physical GPU 0
+FAILED sub-14 exit 1
+START sub-16 physical GPU 0
+FAILED sub-16 exit 1
+START sub-18 physical GPU 0
+FAILED sub-18 exit 1
+START sub-20 physical GPU 0
+FAILED sub-20 exit 1
+START sub-07 physical GPU 1
+FAILED sub-07 exit 1
+START sub-09 physical GPU 1
+FAILED sub-09 exit 1
+START sub-11 physical GPU 1
+FAILED sub-11 exit 1
+START sub-13 physical GPU 1
+FAILED sub-13 exit 1
+START sub-15 physical GPU 1
+FAILED sub-15 exit 1
+START sub-17 physical GPU 1
+FAILED sub-17 exit 1
+START sub-19 physical GPU 1
+FAILED sub-19 exit 1
+Incomplete: 5/20; all rows retained; no formal all-20 S4 generated
+QUEUE FINISHED; metrics 5 /20; no low-performance subjects excluded
+RESUME; verified completed subjects [1, 2, 3, 4, 5]
+REUSE completed frozen models and final test sub-01
+REUSE completed frozen models and final test sub-02
+REUSE completed frozen models and final test sub-04
+REUSE completed frozen models and final test sub-03
+REUSE completed frozen models and final test sub-05
+START sub-06 physical GPU 0
+START sub-07 physical GPU 1
+FAILED sub-07 exit 1
+START sub-09 physical GPU 1
+RESUME; verified completed subjects [1, 2, 3, 4, 5]
+REUSE completed frozen models and final test sub-01
+REUSE completed frozen models and final test sub-02
+REUSE completed frozen models and final test sub-04REUSE completed frozen models and final test
+ sub-03
+REUSE completed frozen models and final test sub-05
+START sub-07 physical GPU 1
+START sub-06 physical GPU 0
+START sub-09 physical GPU 1
+START sub-08 physical GPU 0
+FAILED sub-08 exit 1
+START sub-10 physical GPU 0
+START sub-11 physical GPU 1
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 0 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+START sub-12 physical GPU 0
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+GPU 1 occupied; waiting, no processes terminated
+START sub-13 physical GPU 1
